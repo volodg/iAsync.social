@@ -37,8 +37,8 @@ public struct SocialFacebookUser {
     public let link       : String?
     public let locale     : String?
     public let timezone   : Int?
-//    public let updatedTime: String?
-//    public let verified   : Bool?
+    public let updatedTime: String?
+    public let verified   : Bool?
 }
 
 extension SocialFacebookUser : Equatable {}
@@ -56,7 +56,7 @@ public func ==(lhs: SocialFacebookUser, rhs: SocialFacebookUser) -> Bool {
               && lhs.link        == rhs.link
               && lhs.locale      == rhs.locale
               && lhs.timezone    == rhs.timezone
-//              && lhs.updatedTime == rhs.updatedTime
-//              && lhs.verified    == rhs.verified
+              && lhs.updatedTime == rhs.updatedTime
+              && lhs.verified    == rhs.verified
     return result
 }

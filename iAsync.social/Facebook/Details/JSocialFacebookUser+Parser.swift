@@ -12,14 +12,12 @@ import iAsync_utils
 
 import Argo
 import Runes
+import Box
 
-//{ "link": "https://www.facebook.com/app_scoped_user_id/10204644364935834/",
-//  "locale": "en_US",
-//  "timezone": 3,
 //  "updated_time" : "2014-09-13T08:38:51+0000",
 //  "verified": true }
 
-private struct SocialFacebookUserStruct {
+private struct SocialFacebookUserStruct1 {
     
     let id         : String
     let email      : String?
@@ -28,15 +26,19 @@ private struct SocialFacebookUserStruct {
     let lastName   : String?
     let gender     : String?
     let birthday   : String?
+}
+
+private struct SocialFacebookUserStruct2 {
+    
     let biography  : String?
     let link       : String?
     let locale     : String?
     let timezone   : Int?
-//    let updatedTime: String?
-//    let verified   : Bool?
+    let updatedTime: String?
+    let verified   : Bool?
 }
 
-extension SocialFacebookUserStruct : Decodable {
+extension SocialFacebookUserStruct1 : Decodable {
     
     static func create
         (id         : String )
@@ -46,13 +48,7 @@ extension SocialFacebookUserStruct : Decodable {
         (lastName   : String?)
         (gender     : String?)
         (birthday   : String?)
-        (biography  : String?)
-        (link       : String?)
-        (locale     : String?)
-        (timezone   : Int?)
-//        (updatedTime: String?)
-//        (verified   : Bool?)
-        -> SocialFacebookUserStruct
+        -> SocialFacebookUserStruct1
     {
         return self(
             id         : id         ,
@@ -61,17 +57,11 @@ extension SocialFacebookUserStruct : Decodable {
             firstName  : firstName  ,
             lastName   : lastName   ,
             gender     : gender     ,
-            birthday   : birthday   ,
-            biography  : biography  ,
-            link       : link       ,
-            locale     : locale     ,
-            timezone   : timezone   //,
-//            updatedTime: updatedTime//,
-//            verified   : verified
+            birthday   : birthday
         )
     }
     
-    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct>
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct1>
     {
         return self.create
             <^> j <| "id"
@@ -81,12 +71,38 @@ extension SocialFacebookUserStruct : Decodable {
             <*> j <|? "last_name"
             <*> j <|? "gender"
             <*> j <|? "birthday"
-            <*> j <|? "bio"
+    }
+}
+
+extension SocialFacebookUserStruct2 : Decodable {
+    
+    static func create
+        (biography  : String?)
+        (link       : String?)
+        (locale     : String?)
+        (timezone   : Int?)
+        (updatedTime: String?)
+        (verified   : Bool?)
+        -> SocialFacebookUserStruct2
+    {
+        return self(
+            biography  : biography  ,
+            link       : link       ,
+            locale     : locale     ,
+            timezone   : timezone   ,
+            updatedTime: updatedTime,
+            verified   : verified)
+    }
+    
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct2>
+    {
+        return self.create
+            <^> j <|? "bio"
             <*> j <|? "link"
             <*> j <|? "locale"
             <*> j <|? "timezone"
-//            <*> j <|? "updated_time"
-//            <*> j <|? "verified"
+            <*> j <|? "updated_time"
+            <*> j <|? "verified"
     }
 }
 
@@ -94,15 +110,25 @@ extension SocialFacebookUser {
     
     static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<SocialFacebookUser>
     {
-        //println("json: \(json)")
-        let data: Decoded<SocialFacebookUserStruct> = decode(json)
+        let struct1: Decoded<SocialFacebookUserStruct1> = decode(json)
         
-        switch data {
+        let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2)> in
+            
+            let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
+            
+            return res2.map( { (res2: SocialFacebookUserStruct2) -> (SocialFacebookUserStruct1, SocialFacebookUserStruct2) in
+                
+                let pair: (SocialFacebookUserStruct1, SocialFacebookUserStruct2) = (res1, res2)
+                return pair
+            } )
+        }
+        
+        switch structs {
         case let .Success(v):
             
             let birthday: NSDate?
             
-            if let date = v.value.birthday {
+            if let date = v.value.0.birthday {
                 
                 birthday = fbUserBithdayDateFormat.dateFromString(date)
             } else {
@@ -111,19 +137,19 @@ extension SocialFacebookUser {
             }
             
             let result = SocialFacebookUser(
-                id         : v.value.id         ,
-                email      : v.value.email      ,
-                name       : v.value.name       ,
-                firstName  : v.value.firstName  ,
-                lastName   : v.value.lastName   ,
-                gender     : v.value.gender     ,
-                birthday   : birthday           ,
-                biography  : v.value.biography  ,
-                link       : v.value.link       ,
-                locale     : v.value.locale     ,
-                timezone   : v.value.timezone   //,
-//                updatedTime: v.value.updatedTime,
-//                verified   : v.value.verified
+                id         : v.value.0.id         ,
+                email      : v.value.0.email      ,
+                name       : v.value.0.name       ,
+                firstName  : v.value.0.firstName  ,
+                lastName   : v.value.0.lastName   ,
+                gender     : v.value.0.gender     ,
+                birthday   : birthday             ,
+                biography  : v.value.1.biography  ,
+                link       : v.value.1.link       ,
+                locale     : v.value.1.locale     ,
+                timezone   : v.value.1.timezone   ,
+                updatedTime: v.value.1.updatedTime,
+                verified   : v.value.1.verified
             )
             
             return Result.value(result)
