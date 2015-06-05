@@ -9,58 +9,77 @@
 import Foundation
 
 import iAsync_utils
-//import JJsonTools
 
-public extension JSocialFacebookUser {
+import Argo
+import Runes
 
-    class func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<JSocialFacebookUser>
+private struct SocialFacebookUserStruct {
+    
+    let id        : String
+    let email     : String?
+    let name      : String?
+    let gender    : String?
+    let birthday  : String?
+    let biography : String?
+}
+
+extension SocialFacebookUserStruct : Decodable {
+    
+    static func create
+        (id        : String )
+        (email     : String?)
+        (name      : String?)
+        (gender    : String?)
+        (birthday  : String?)
+        (biography : String?) -> SocialFacebookUserStruct {
+            
+            return self(id: id, email: email, name: name, gender: gender, birthday: birthday, biography: biography)
+    }
+    
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct> {
+        return self.create
+            <^> j <| "id"
+            <*> j <|? "email"
+            <*> j <|? "name"
+            <*> j <|? "gender"
+            <*> j <|? "birthday"
+            <*> j <|? "bio"
+    }
+    
+}
+
+extension SocialFacebookUser {
+    
+    static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<SocialFacebookUser>
     {
-        return Result.error(Error(description: "TODO implement"))
-//        let facebookID = json.string("id")
-//        let email      = json.optionString("email"   )
-//        let name       = json.optionString("name"    )
-//        let gender     = json.optionString("gender"  )
-//        let biography  = json.optionString("bio"     )
-//        let birthday   = json.optionString("birthday")
-//        
-//        let url = json.optionString("picture" </> "data" </> "url")
-//        
-//        return (facebookID, email, name, gender, biography, birthday, url) >>= {
-//            (facebookID, email, name, gender, biography, birthdayStr, url) -> Result<JSocialFacebookUser> in
-//            
-//            let birthday: NSDate?
-//                
-//            if let birthdayStr = birthdayStr {
-//                
-//                let formatter = NSDateFormatter()
-//                
-//                formatter.dateFormat = "MM/dd/yyyy"
-//                formatter.locale   = NSLocale(localeIdentifier: "en_US")
-//                formatter.timeZone = NSTimeZone(name: "GMT")
-//                
-//                birthday = formatter.dateFromString(birthdayStr)
-//            } else {
-//                birthday = nil
-//            }
-//            
-//            //TODO isMale = gender == "male"
-//            let photoURL: NSURL?
-//            if let url = url {
-//                photoURL = NSURL(string: url)
-//            } else {
-//                photoURL = nil
-//            }
-//            
-//            let result = JSocialFacebookUser(
-//                facebookID: facebookID,
-//                email     : email     ,
-//                name      : name      ,
-//                gender    : gender    ,
-//                birthday  : birthday  ,
-//                biography : biography ,
-//                photoURL  : photoURL
-//            )
-//            return Result.value(result)
-//        }
+        let data: Decoded<SocialFacebookUserStruct> = decode(json)
+        
+        switch data {
+        case let .Success(v):
+            
+            let birthday: NSDate?
+            
+            if let date = v.value.birthday {
+                
+                birthday = fbUserBithdayDateFormat.dateFromString(date)
+            } else {
+                
+                birthday = nil
+            }
+            
+            let result = SocialFacebookUser(
+                id        : v.value.id,
+                email     : v.value.email,
+                name      : v.value.name,
+                gender    : v.value.gender,
+                birthday  : birthday,
+                biography : v.value.biography)
+            
+            return Result.value(result)
+        case let .TypeMismatch(str):
+            return Result.error(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
+        case let .MissingKey(str):
+            return Result.error(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+        }
     }
 }
