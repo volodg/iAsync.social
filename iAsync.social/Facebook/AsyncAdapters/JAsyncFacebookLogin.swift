@@ -71,7 +71,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                 finishCallback(result: Result.error(JAsyncFinishedByCancellationError()))
             } else {
                 
-                finishCallback(result: Result.error(JError(description: "unsupported fb error, TODO fix")))
+                finishCallback(result: Result.error(Error(description: "unsupported fb error, TODO fix")))
             }
         })
     }

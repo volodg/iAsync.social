@@ -3,7 +3,7 @@ import Foundation
 import iAsync_utils
 //import FacebookSDK
 
-public class JFacebookSDKErrors : JError {
+public class JFacebookSDKErrors : Error {
     
     func jffErrorsDomain() -> String {
         

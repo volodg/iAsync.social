@@ -15,7 +15,7 @@ public extension JSocialFacebookUser {
 
     class func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<JSocialFacebookUser>
     {
-        return Result.error(JError(description: "TODO implement"))
+        return Result.error(Error(description: "TODO implement"))
 //        let facebookID = json.string("id")
 //        let email      = json.optionString("email"   )
 //        let name       = json.optionString("name"    )

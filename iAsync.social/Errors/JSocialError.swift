@@ -2,7 +2,7 @@ import Foundation
 
 import iAsync_utils
 
-public class JSocialError : JError {
+public class JSocialError : Error {
     
     func jffErrorsDomain() -> String {
         
