@@ -29,6 +29,8 @@ public struct SocialFacebookUser {
     public let id        : String
     public let email     : String?
     public let name      : String?
+    public let firstName : String?
+    public let lastName  : String?
     public let gender    : String?
     public let birthday  : NSDate?
     public let biography : String?
@@ -38,11 +40,13 @@ extension SocialFacebookUser : Equatable {}
 
 public func ==(lhs: SocialFacebookUser, rhs: SocialFacebookUser) -> Bool {
     
-    let result = lhs.id         == rhs.id
-              && lhs.email      == rhs.email
-              && lhs.name       == rhs.name
-              && lhs.gender     == rhs.gender
-              && lhs.birthday   == rhs.birthday
-              && lhs.biography  == rhs.biography
+    let result = lhs.id        == rhs.id
+              && lhs.email     == rhs.email
+              && lhs.name      == rhs.name
+              && lhs.firstName == rhs.firstName
+              && lhs.lastName  == rhs.lastName
+              && lhs.gender    == rhs.gender
+              && lhs.birthday  == rhs.birthday
+              && lhs.biography == rhs.biography
     return result
 }

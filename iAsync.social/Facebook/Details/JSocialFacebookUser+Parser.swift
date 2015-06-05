@@ -18,6 +18,8 @@ private struct SocialFacebookUserStruct {
     let id        : String
     let email     : String?
     let name      : String?
+    let firstName : String?
+    let lastName  : String?
     let gender    : String?
     let birthday  : String?
     let biography : String?
@@ -29,29 +31,34 @@ extension SocialFacebookUserStruct : Decodable {
         (id        : String )
         (email     : String?)
         (name      : String?)
+        (firstName : String?)
+        (lastName  : String?)
         (gender    : String?)
         (birthday  : String?)
-        (biography : String?) -> SocialFacebookUserStruct {
-            
-            return self(id: id, email: email, name: name, gender: gender, birthday: birthday, biography: biography)
+        (biography : String?) -> SocialFacebookUserStruct
+    {
+        return self(id: id, email: email, name: name, firstName: firstName, lastName: lastName, gender: gender, birthday: birthday, biography: biography)
     }
     
-    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct> {
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct>
+    {
         return self.create
             <^> j <| "id"
             <*> j <|? "email"
             <*> j <|? "name"
+            <*> j <|? "first_name"
+            <*> j <|? "last_name"
             <*> j <|? "gender"
             <*> j <|? "birthday"
             <*> j <|? "bio"
     }
-    
 }
 
 extension SocialFacebookUser {
     
     static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<SocialFacebookUser>
     {
+        println("json: \(json)")
         let data: Decoded<SocialFacebookUserStruct> = decode(json)
         
         switch data {
@@ -71,6 +78,8 @@ extension SocialFacebookUser {
                 id        : v.value.id,
                 email     : v.value.email,
                 name      : v.value.name,
+                firstName : v.value.firstName,
+                lastName  : v.value.lastName,
                 gender    : v.value.gender,
                 birthday  : birthday,
                 biography : v.value.biography)
