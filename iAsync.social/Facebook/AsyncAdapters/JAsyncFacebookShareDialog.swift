@@ -68,17 +68,17 @@ import FBSDKShareKit
     
     @objc public func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!)
     {
-        finishCallback?(result: JResult.value(()))
+        finishCallback?(result: Result.value(()))
     }
     
     public func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!)
     {
-        finishCallback?(result: JResult.error(error))
+        finishCallback?(result: Result.error(error))
     }
     
     public func sharerDidCancel(sharer: FBSDKSharing!)
     {
-        finishCallback?(result: JResult.error(JAsyncFinishedByCancellationError()))
+        finishCallback?(result: Result.error(JAsyncFinishedByCancellationError()))
     }
 }
 

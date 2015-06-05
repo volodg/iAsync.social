@@ -13,9 +13,9 @@ import iAsync_utils
 
 public extension JSocialFacebookUser {
 
-    class func createSocialFacebookUserWithJsonObject(json: AnyObject) -> JResult<JSocialFacebookUser>
+    class func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<JSocialFacebookUser>
     {
-        return JResult.error(JError(description: "TODO implement"))
+        return Result.error(JError(description: "TODO implement"))
 //        let facebookID = json.string("id")
 //        let email      = json.optionString("email"   )
 //        let name       = json.optionString("name"    )
@@ -26,7 +26,7 @@ public extension JSocialFacebookUser {
 //        let url = json.optionString("picture" </> "data" </> "url")
 //        
 //        return (facebookID, email, name, gender, biography, birthday, url) >>= {
-//            (facebookID, email, name, gender, biography, birthdayStr, url) -> JResult<JSocialFacebookUser> in
+//            (facebookID, email, name, gender, biography, birthdayStr, url) -> Result<JSocialFacebookUser> in
 //            
 //            let birthday: NSDate?
 //                
@@ -60,7 +60,7 @@ public extension JSocialFacebookUser {
 //                biography : biography ,
 //                photoURL  : photoURL
 //            )
-//            return JResult.value(result)
+//            return Result.value(result)
 //        }
     }
 }

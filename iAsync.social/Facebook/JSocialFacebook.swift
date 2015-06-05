@@ -110,7 +110,7 @@ public class JSocialFacebook: NSObject {
 //            
 //            let loader = jffFacebookLoginWithPublishPermissions(session, Array(currPermissions))
 //            
-//            let doneCallbackWrapper = { (result: JResult<FBSession>) -> () in
+//            let doneCallbackWrapper = { (result: Result<FBSession>) -> () in
 //                
 //                switch result {
 //                case let .Value(v):
@@ -238,7 +238,7 @@ public class JSocialFacebook: NSObject {
 //    private class func userParser() -> JAsyncTypes2<NSDictionary, JSocialFacebookUser>.JAsyncBinder
 //    {
 //        let parser = { (result: NSDictionary) -> JAsyncTypes<JSocialFacebookUser>.JAsync in
-//            let loadDataBlock = { () -> JResult<JSocialFacebookUser> in
+//            let loadDataBlock = { () -> Result<JSocialFacebookUser> in
 //                return JJsonValue.create(result) >>= { JSocialFacebookUser.createSocialFacebookUserWithJsonObject($0) }
 //            }
 //            return asyncWithSyncOperationInCurrentQueue(loadDataBlock)
@@ -257,11 +257,11 @@ public class JSocialFacebook: NSObject {
 //        func parser(result: NSDictionary) -> JAsyncTypes<[JSocialFacebookUser]>.JAsync {
 //            
 //            println("result: \(result)")
-//            func loadDataBlock() -> JResult<[JSocialFacebookUser]> {
+//            func loadDataBlock() -> Result<[JSocialFacebookUser]> {
 //                
-//                return JJsonValue.create(result) >>= { json -> JResult<[JSocialFacebookUser]> in
+//                return JJsonValue.create(result) >>= { json -> Result<[JSocialFacebookUser]> in
 //                    
-//                    return json.array("data") >>= { $0 >>= { elJson -> JResult<JSocialFacebookUser> in
+//                    return json.array("data") >>= { $0 >>= { elJson -> Result<JSocialFacebookUser> in
 //                        
 //                        return JSocialFacebookUser.createSocialFacebookUserWithJsonObject(elJson)
 //                    }}

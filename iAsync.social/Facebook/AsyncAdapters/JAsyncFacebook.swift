@@ -60,10 +60,10 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
             
             if let graphObject = graphObject as? NSDictionary {
                 
-                finishCallback(result: JResult.value(graphObject))
+                finishCallback(result: Result.value(graphObject))
             } else {
                 
-                finishCallback(result: JResult.error(error))
+                finishCallback(result: Result.error(error))
             }
         }
     }

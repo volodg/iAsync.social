@@ -17,7 +17,7 @@ import FBSDKLoginKit
 private class JAsyncFacebookLogout : JAsyncInterface {
     
     private var finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback?
-    private var timer: JTimer?
+    private var timer: Timer?
     
     private let renewSystemAuthorization: Bool
     
@@ -36,7 +36,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         
         manager?.logOut()
         
-        let timer = JTimer()
+        let timer = Timer()
         self.timer = timer
         
         //TODO remove ????
@@ -78,7 +78,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     
     func notifyFinished()
     {
-        finishCallback?(result: JResult.value(()))
+        finishCallback?(result: Result.value(()))
     }
 }
 
