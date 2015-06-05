@@ -6,6 +6,8 @@ def import_pods
 pod 'iAsync.async'
 pod 'iAsync.utils'
 pod 'iAsync.network'
+pod 'FBSDKShareKit'
+pod 'FBSDKLoginKit'
 
 end
 

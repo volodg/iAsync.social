@@ -10,6 +10,21 @@
 		2D65F9B01B21CDFE007793DB /* iAsync.social.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D65F9AF1B21CDFE007793DB /* iAsync.social.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2D65F9B61B21CDFE007793DB /* iAsync_social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65F9AA1B21CDFE007793DB /* iAsync_social.framework */; };
 		2D65F9BD1B21CDFE007793DB /* iAsync_socialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9BC1B21CDFE007793DB /* iAsync_socialTests.swift */; };
+		2D65FA0F1B21D1A0007793DB /* JSocialError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9F71B21D1A0007793DB /* JSocialError.swift */; };
+		2D65FA101B21D1A0007793DB /* JAsyncFacebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9FA1B21D1A0007793DB /* JAsyncFacebook.swift */; };
+		2D65FA111B21D1A0007793DB /* JAsyncFacebookLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9FB1B21D1A0007793DB /* JAsyncFacebookLogin.swift */; };
+		2D65FA131B21D1A0007793DB /* JAsyncFacebookLogout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9FD1B21D1A0007793DB /* JAsyncFacebookLogout.swift */; };
+		2D65FA141B21D1A0007793DB /* JAsyncFacebookShareDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9FE1B21D1A0007793DB /* JAsyncFacebookShareDialog.swift */; };
+		2D65FA161B21D1A0007793DB /* JSocialFacebookUser+Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA011B21D1A0007793DB /* JSocialFacebookUser+Parser.swift */; };
+		2D65FA171B21D1A0007793DB /* JFacebookAuthorizeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA031B21D1A0007793DB /* JFacebookAuthorizeError.swift */; };
+		2D65FA181B21D1A0007793DB /* JFacebookError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA041B21D1A0007793DB /* JFacebookError.swift */; };
+		2D65FA191B21D1A0007793DB /* JFacebookRequestPublishingAccessError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA051B21D1A0007793DB /* JFacebookRequestPublishingAccessError.swift */; };
+		2D65FA1B1B21D1A0007793DB /* JFacebookLoginFailedCanceledError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA081B21D1A0007793DB /* JFacebookLoginFailedCanceledError.swift */; };
+		2D65FA1C1B21D1A0007793DB /* JFacebookLoginFailedPasswordWasChanged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA091B21D1A0007793DB /* JFacebookLoginFailedPasswordWasChanged.swift */; };
+		2D65FA1D1B21D1A0007793DB /* JFacebookSDKErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA0A1B21D1A0007793DB /* JFacebookSDKErrors.swift */; };
+		2D65FA1E1B21D1A0007793DB /* JSocialFacebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA0B1B21D1A0007793DB /* JSocialFacebook.swift */; };
+		2D65FA1F1B21D1A0007793DB /* JSocialFBIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA0C1B21D1A0007793DB /* JSocialFBIntegration.swift */; };
+		2D65FA201B21D1A0007793DB /* JSocialFacebookUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65FA0E1B21D1A0007793DB /* JSocialFacebookUser.swift */; };
 		3FF8B0D6E64B21AF11ED1C59 /* Pods_iAsync_social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507C5CE2AF779000B81B411 /* Pods_iAsync_social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8FB2A909E58A244D56DD86D8 /* Pods_iAsync_socialTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE21030F39769BB22CF55B3 /* Pods_iAsync_socialTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -31,6 +46,22 @@
 		2D65F9B51B21CDFE007793DB /* iAsync.socialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAsync.socialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D65F9BB1B21CDFE007793DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D65F9BC1B21CDFE007793DB /* iAsync_socialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAsync_socialTests.swift; sourceTree = "<group>"; };
+		2D65F9F71B21D1A0007793DB /* JSocialError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSocialError.swift; sourceTree = "<group>"; };
+		2D65F9FA1B21D1A0007793DB /* JAsyncFacebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JAsyncFacebook.swift; sourceTree = "<group>"; };
+		2D65F9FB1B21D1A0007793DB /* JAsyncFacebookLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JAsyncFacebookLogin.swift; sourceTree = "<group>"; };
+		2D65F9FD1B21D1A0007793DB /* JAsyncFacebookLogout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JAsyncFacebookLogout.swift; sourceTree = "<group>"; };
+		2D65F9FE1B21D1A0007793DB /* JAsyncFacebookShareDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JAsyncFacebookShareDialog.swift; sourceTree = "<group>"; };
+		2D65FA011B21D1A0007793DB /* JSocialFacebookUser+Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSocialFacebookUser+Parser.swift"; sourceTree = "<group>"; };
+		2D65FA031B21D1A0007793DB /* JFacebookAuthorizeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookAuthorizeError.swift; sourceTree = "<group>"; };
+		2D65FA041B21D1A0007793DB /* JFacebookError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookError.swift; sourceTree = "<group>"; };
+		2D65FA051B21D1A0007793DB /* JFacebookRequestPublishingAccessError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookRequestPublishingAccessError.swift; sourceTree = "<group>"; };
+		2D65FA081B21D1A0007793DB /* JFacebookLoginFailedCanceledError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookLoginFailedCanceledError.swift; sourceTree = "<group>"; };
+		2D65FA091B21D1A0007793DB /* JFacebookLoginFailedPasswordWasChanged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookLoginFailedPasswordWasChanged.swift; sourceTree = "<group>"; };
+		2D65FA0A1B21D1A0007793DB /* JFacebookSDKErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JFacebookSDKErrors.swift; sourceTree = "<group>"; };
+		2D65FA0B1B21D1A0007793DB /* JSocialFacebook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSocialFacebook.swift; sourceTree = "<group>"; };
+		2D65FA0C1B21D1A0007793DB /* JSocialFBIntegration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSocialFBIntegration.swift; sourceTree = "<group>"; };
+		2D65FA0E1B21D1A0007793DB /* JSocialFacebookUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSocialFacebookUser.swift; sourceTree = "<group>"; };
+		2D65FA211B21D2F9007793DB /* iAsync.social.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = iAsync.social.podspec; sourceTree = "<group>"; };
 		2FDECA391260A700052E6944 /* Pods-iAsync.socialTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.socialTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.socialTests/Pods-iAsync.socialTests.release.xcconfig"; sourceTree = "<group>"; };
 		5AE21030F39769BB22CF55B3 /* Pods_iAsync_socialTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAsync_socialTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C91F060542E6BBB282C3109 /* Pods-iAsync.social.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.social.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.social/Pods-iAsync.social.debug.xcconfig"; sourceTree = "<group>"; };
@@ -63,6 +94,7 @@
 		2D65F9A01B21CDFE007793DB = {
 			isa = PBXGroup;
 			children = (
+				2D65FA211B21D2F9007793DB /* iAsync.social.podspec */,
 				2D65F9AC1B21CDFE007793DB /* iAsync.social */,
 				2D65F9B91B21CDFE007793DB /* iAsync.socialTests */,
 				2D65F9AB1B21CDFE007793DB /* Products */,
@@ -83,6 +115,8 @@
 		2D65F9AC1B21CDFE007793DB /* iAsync.social */ = {
 			isa = PBXGroup;
 			children = (
+				2D65F9F61B21D1A0007793DB /* Errors */,
+				2D65F9F81B21D1A0007793DB /* Facebook */,
 				2D65F9AF1B21CDFE007793DB /* iAsync.social.h */,
 				2D65F9AD1B21CDFE007793DB /* Supporting Files */,
 			);
@@ -112,6 +146,75 @@
 				2D65F9BB1B21CDFE007793DB /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2D65F9F61B21D1A0007793DB /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				2D65F9F71B21D1A0007793DB /* JSocialError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		2D65F9F81B21D1A0007793DB /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				2D65F9F91B21D1A0007793DB /* AsyncAdapters */,
+				2D65FA001B21D1A0007793DB /* Details */,
+				2D65FA021B21D1A0007793DB /* Errors */,
+				2D65FA0B1B21D1A0007793DB /* JSocialFacebook.swift */,
+				2D65FA0C1B21D1A0007793DB /* JSocialFBIntegration.swift */,
+				2D65FA0D1B21D1A0007793DB /* Model */,
+			);
+			path = Facebook;
+			sourceTree = "<group>";
+		};
+		2D65F9F91B21D1A0007793DB /* AsyncAdapters */ = {
+			isa = PBXGroup;
+			children = (
+				2D65F9FA1B21D1A0007793DB /* JAsyncFacebook.swift */,
+				2D65F9FB1B21D1A0007793DB /* JAsyncFacebookLogin.swift */,
+				2D65F9FD1B21D1A0007793DB /* JAsyncFacebookLogout.swift */,
+				2D65F9FE1B21D1A0007793DB /* JAsyncFacebookShareDialog.swift */,
+			);
+			path = AsyncAdapters;
+			sourceTree = "<group>";
+		};
+		2D65FA001B21D1A0007793DB /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				2D65FA011B21D1A0007793DB /* JSocialFacebookUser+Parser.swift */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		2D65FA021B21D1A0007793DB /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				2D65FA031B21D1A0007793DB /* JFacebookAuthorizeError.swift */,
+				2D65FA041B21D1A0007793DB /* JFacebookError.swift */,
+				2D65FA051B21D1A0007793DB /* JFacebookRequestPublishingAccessError.swift */,
+				2D65FA061B21D1A0007793DB /* SDKErrors */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		2D65FA061B21D1A0007793DB /* SDKErrors */ = {
+			isa = PBXGroup;
+			children = (
+				2D65FA081B21D1A0007793DB /* JFacebookLoginFailedCanceledError.swift */,
+				2D65FA091B21D1A0007793DB /* JFacebookLoginFailedPasswordWasChanged.swift */,
+				2D65FA0A1B21D1A0007793DB /* JFacebookSDKErrors.swift */,
+			);
+			path = SDKErrors;
+			sourceTree = "<group>";
+		};
+		2D65FA0D1B21D1A0007793DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2D65FA0E1B21D1A0007793DB /* JSocialFacebookUser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5B7EFD19FAE4BF1D78109BEC /* Frameworks */ = {
@@ -324,6 +427,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D65FA141B21D1A0007793DB /* JAsyncFacebookShareDialog.swift in Sources */,
+				2D65FA161B21D1A0007793DB /* JSocialFacebookUser+Parser.swift in Sources */,
+				2D65FA111B21D1A0007793DB /* JAsyncFacebookLogin.swift in Sources */,
+				2D65FA0F1B21D1A0007793DB /* JSocialError.swift in Sources */,
+				2D65FA1B1B21D1A0007793DB /* JFacebookLoginFailedCanceledError.swift in Sources */,
+				2D65FA1C1B21D1A0007793DB /* JFacebookLoginFailedPasswordWasChanged.swift in Sources */,
+				2D65FA201B21D1A0007793DB /* JSocialFacebookUser.swift in Sources */,
+				2D65FA181B21D1A0007793DB /* JFacebookError.swift in Sources */,
+				2D65FA1D1B21D1A0007793DB /* JFacebookSDKErrors.swift in Sources */,
+				2D65FA101B21D1A0007793DB /* JAsyncFacebook.swift in Sources */,
+				2D65FA191B21D1A0007793DB /* JFacebookRequestPublishingAccessError.swift in Sources */,
+				2D65FA171B21D1A0007793DB /* JFacebookAuthorizeError.swift in Sources */,
+				2D65FA1F1B21D1A0007793DB /* JSocialFBIntegration.swift in Sources */,
+				2D65FA131B21D1A0007793DB /* JAsyncFacebookLogout.swift in Sources */,
+				2D65FA1E1B21D1A0007793DB /* JSocialFacebook.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
