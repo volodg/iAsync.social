@@ -121,6 +121,8 @@ Pod::Spec.new do |s|
   s.dependency "iAsync.async"#, "~> 1.0.1"
   s.dependency "iAsync.utils"#, "~> 1.0.1"
   s.dependency "iAsync.network"#, "~> 1.0.1"
+
+  s.dependency "FBSDKCoreKit"
   s.dependency "FBSDKShareKit"
   s.dependency "FBSDKLoginKit"
 
