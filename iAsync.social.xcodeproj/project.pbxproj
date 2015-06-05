@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		2D65F9B01B21CDFE007793DB /* iAsync.social.h in Headers */ = {isa = PBXBuildFile; fileRef = 2D65F9AF1B21CDFE007793DB /* iAsync.social.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2D65F9B61B21CDFE007793DB /* iAsync.social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65F9AA1B21CDFE007793DB /* iAsync.social.framework */; };
+		2D65F9B61B21CDFE007793DB /* iAsync_social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D65F9AA1B21CDFE007793DB /* iAsync_social.framework */; };
 		2D65F9BD1B21CDFE007793DB /* iAsync_socialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D65F9BC1B21CDFE007793DB /* iAsync_socialTests.swift */; };
+		3FF8B0D6E64B21AF11ED1C59 /* Pods_iAsync_social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E507C5CE2AF779000B81B411 /* Pods_iAsync_social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8FB2A909E58A244D56DD86D8 /* Pods_iAsync_socialTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE21030F39769BB22CF55B3 /* Pods_iAsync_socialTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,12 +25,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2D65F9AA1B21CDFE007793DB /* iAsync.social.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iAsync.social.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D65F9AA1B21CDFE007793DB /* iAsync_social.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iAsync_social.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D65F9AE1B21CDFE007793DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D65F9AF1B21CDFE007793DB /* iAsync.social.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iAsync.social.h; sourceTree = "<group>"; };
 		2D65F9B51B21CDFE007793DB /* iAsync.socialTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iAsync.socialTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D65F9BB1B21CDFE007793DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D65F9BC1B21CDFE007793DB /* iAsync_socialTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iAsync_socialTests.swift; sourceTree = "<group>"; };
+		2FDECA391260A700052E6944 /* Pods-iAsync.socialTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.socialTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.socialTests/Pods-iAsync.socialTests.release.xcconfig"; sourceTree = "<group>"; };
+		5AE21030F39769BB22CF55B3 /* Pods_iAsync_socialTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAsync_socialTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C91F060542E6BBB282C3109 /* Pods-iAsync.social.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.social.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.social/Pods-iAsync.social.debug.xcconfig"; sourceTree = "<group>"; };
+		9A1BC32395A1C0E15505EBEF /* Pods-iAsync.socialTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.socialTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.socialTests/Pods-iAsync.socialTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E507C5CE2AF779000B81B411 /* Pods_iAsync_social.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iAsync_social.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6E8647CB50D21B5C20A3E27 /* Pods-iAsync.social.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iAsync.social.release.xcconfig"; path = "Pods/Target Support Files/Pods-iAsync.social/Pods-iAsync.social.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FF8B0D6E64B21AF11ED1C59 /* Pods_iAsync_social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,7 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D65F9B61B21CDFE007793DB /* iAsync.social.framework in Frameworks */,
+				2D65F9B61B21CDFE007793DB /* iAsync_social.framework in Frameworks */,
+				8FB2A909E58A244D56DD86D8 /* Pods_iAsync_socialTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,13 +66,15 @@
 				2D65F9AC1B21CDFE007793DB /* iAsync.social */,
 				2D65F9B91B21CDFE007793DB /* iAsync.socialTests */,
 				2D65F9AB1B21CDFE007793DB /* Products */,
+				6113DE1C90092B3E967D201A /* Pods */,
+				5B7EFD19FAE4BF1D78109BEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		2D65F9AB1B21CDFE007793DB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2D65F9AA1B21CDFE007793DB /* iAsync.social.framework */,
+				2D65F9AA1B21CDFE007793DB /* iAsync_social.framework */,
 				2D65F9B51B21CDFE007793DB /* iAsync.socialTests.xctest */,
 			);
 			name = Products;
@@ -102,6 +114,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5B7EFD19FAE4BF1D78109BEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E507C5CE2AF779000B81B411 /* Pods_iAsync_social.framework */,
+				5AE21030F39769BB22CF55B3 /* Pods_iAsync_socialTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6113DE1C90092B3E967D201A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7C91F060542E6BBB282C3109 /* Pods-iAsync.social.debug.xcconfig */,
+				F6E8647CB50D21B5C20A3E27 /* Pods-iAsync.social.release.xcconfig */,
+				9A1BC32395A1C0E15505EBEF /* Pods-iAsync.socialTests.debug.xcconfig */,
+				2FDECA391260A700052E6944 /* Pods-iAsync.socialTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -120,10 +152,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D65F9C01B21CDFE007793DB /* Build configuration list for PBXNativeTarget "iAsync.social" */;
 			buildPhases = (
+				376D82898594B4D0E2CD6691 /* Check Pods Manifest.lock */,
 				2D65F9A51B21CDFE007793DB /* Sources */,
 				2D65F9A61B21CDFE007793DB /* Frameworks */,
 				2D65F9A71B21CDFE007793DB /* Headers */,
 				2D65F9A81B21CDFE007793DB /* Resources */,
+				564F0E308A109C218B538278 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,16 +165,19 @@
 			);
 			name = iAsync.social;
 			productName = iAsync.social;
-			productReference = 2D65F9AA1B21CDFE007793DB /* iAsync.social.framework */;
+			productReference = 2D65F9AA1B21CDFE007793DB /* iAsync_social.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		2D65F9B41B21CDFE007793DB /* iAsync.socialTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D65F9C31B21CDFE007793DB /* Build configuration list for PBXNativeTarget "iAsync.socialTests" */;
 			buildPhases = (
+				D963E1E9A0FAFED1B226BBB2 /* Check Pods Manifest.lock */,
 				2D65F9B11B21CDFE007793DB /* Sources */,
 				2D65F9B21B21CDFE007793DB /* Frameworks */,
 				2D65F9B31B21CDFE007793DB /* Resources */,
+				A5640F7078436E3FC20E59C6 /* Embed Pods Frameworks */,
+				9BAF23DFEBD8980C12354306 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,6 +240,84 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		376D82898594B4D0E2CD6691 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		564F0E308A109C218B538278 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAsync.social/Pods-iAsync.social-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9BAF23DFEBD8980C12354306 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAsync.socialTests/Pods-iAsync.socialTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A5640F7078436E3FC20E59C6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iAsync.socialTests/Pods-iAsync.socialTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D963E1E9A0FAFED1B226BBB2 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2D65F9A51B21CDFE007793DB /* Sources */ = {
@@ -322,6 +437,7 @@
 		};
 		2D65F9C11B21CDFE007793DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C91F060542E6BBB282C3109 /* Pods-iAsync.social.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -330,13 +446,14 @@
 				INFOPLIST_FILE = iAsync.social/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iAsync_social;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		2D65F9C21B21CDFE007793DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6E8647CB50D21B5C20A3E27 /* Pods-iAsync.social.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -345,13 +462,14 @@
 				INFOPLIST_FILE = iAsync.social/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = iAsync_social;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		2D65F9C41B21CDFE007793DB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A1BC32395A1C0E15505EBEF /* Pods-iAsync.socialTests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -369,6 +487,7 @@
 		};
 		2D65F9C51B21CDFE007793DB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FDECA391260A700052E6944 /* Pods-iAsync.socialTests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -399,6 +518,7 @@
 				2D65F9C21B21CDFE007793DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2D65F9C31B21CDFE007793DB /* Build configuration list for PBXNativeTarget "iAsync.socialTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +527,7 @@
 				2D65F9C51B21CDFE007793DB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
