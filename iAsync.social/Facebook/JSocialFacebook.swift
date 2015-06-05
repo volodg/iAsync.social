@@ -1,6 +1,6 @@
 //
 //  JSocialFacebook.swift
-//  JSocial
+//  iAsync_social
 //
 //  Created by Vladimir Gorbenko on 08.10.14.
 //  Copyright (c) 2014 EmbeddedSources. All rights reserved.
@@ -156,33 +156,37 @@ public class JSocialFacebook: NSObject {
         return userInfoLoaderWithFields(fields)
     }
     
-    private class func userInfoLoaderWithFields(
-        fields: [String], accessTokenLoader: JAsyncTypes<FBSDKAccessToken>.JAsync) -> JAsyncTypes<SocialFacebookUser>.JAsync
-    {
-        let userLoader = { (accessToken: FBSDKAccessToken) -> JAsyncTypes<SocialFacebookUser>.JAsync in
-            
+    public class func userInfoResponseLoader(fields: [String]) -> JAsyncTypes<NSDictionary>.JAsync {
+    
+        let accessTokenLoader = authFacebookAccessTokenLoader()
+
+        let userInfoLoader = { (accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary>.JAsync in
+    
             let parameters: [String:String] = fields.count > 0
-                ?["fields" : join(",", fields)]
-                :[:]
+            ?["fields" : join(",", fields)]
+            :[:]
             
-            let selfUserLoader = self.graphLoaderWithPath("me", parameters:parameters, accessToken:accessToken)
-            
-            let userParser = self.userParser()
-            
-            let userLoader = bindSequenceOfAsyncs(selfUserLoader, userParser)
-            
-            return userLoader
+            return self.graphLoaderWithPath("me", parameters:parameters, accessToken:accessToken)
         }
-        
-        let loader = bindSequenceOfAsyncs(accessTokenLoader, userLoader)
-        
+    
+        let loader = bindSequenceOfAsyncs(accessTokenLoader, userInfoLoader)
+    
         let reloadSession = sequenceOfAsyncs(
             self.logoutLoaderWithRenewSystemAuthorization(true),
             accessTokenLoader)
         
-        let reloadUser = bindSequenceOfAsyncs(reloadSession, userLoader)
+        let reloadUser = sequenceOfAsyncs(reloadSession, loader)
         
         return trySequenceOfAsyncs(loader, reloadUser)
+    }
+    
+    public class func userInfoLoaderWithFields(fields: [String]) -> JAsyncTypes<SocialFacebookUser>.JAsync
+    {
+        let userInfoLoader = userInfoResponseLoader(fields)
+        
+        let parser = self.userParser()
+            
+        return bindSequenceOfAsyncs(userInfoLoader, parser)
     }
     
     public class func shareWithViewController(
@@ -244,11 +248,6 @@ public class JSocialFacebook: NSObject {
         }
         
         return parser
-    }
-    
-    public class func userInfoLoaderWithFields(fields: [String]) -> JAsyncTypes<SocialFacebookUser>.JAsync
-    {
-        return userInfoLoaderWithFields(fields, accessTokenLoader: authFacebookAccessTokenLoader())
     }
     
 //    private class func usersParser() -> JAsyncTypes2<NSDictionary, [SocialFacebookUser]>.JAsyncBinder {

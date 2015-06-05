@@ -1,6 +1,6 @@
 //
 //  JSocialFBIntegration.swift
-//  JSocial
+//  iAsync_social
 //
 //  Created by Vladimir Gorbenko on 30.03.15.
 //  Copyright (c) 2015 EmbeddedSources. All rights reserved.

@@ -1,6 +1,6 @@
 //
-//  JSocialFacebookUser+Parser.swift
-//  JSocial
+//  SocialFacebookUser+Parser.swift.swift
+//  iAsync_social
 //
 //  Created by Vladimir Gorbenko on 09.10.14.
 //  Copyright (c) 2014 EmbeddedSources. All rights reserved.
@@ -115,12 +115,7 @@ extension SocialFacebookUser {
         let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2)> in
             
             let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
-            
-            return res2.map( { (res2: SocialFacebookUserStruct2) -> (SocialFacebookUserStruct1, SocialFacebookUserStruct2) in
-                
-                let pair: (SocialFacebookUserStruct1, SocialFacebookUserStruct2) = (res1, res2)
-                return pair
-            } )
+            return res2.map( { (res1, $0) } )
         }
         
         switch structs {

@@ -1,6 +1,6 @@
 //
 //  JAsyncFacebookDialog.swift
-//  JSocial
+//  iAsync_social
 //
 //  Created by Vladimir Gorbenko on 09.10.14.
 //  Copyright (c) 2014 EmbeddedSources. All rights reserved.
