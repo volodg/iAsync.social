@@ -25,7 +25,7 @@ public class JFacebookSDKErrors : Error {
         super.init(description: "")
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -49,7 +49,7 @@ public class JFacebookSDKErrors : Error {
 //            JFacebookLoginFailedPasswordWasChanged.self,
 //            ]
 //            
-//            errorClass = firstMatch(errorClasses) { (someClass: JFacebookSDKErrors.Type) -> Bool in
+//            errorClass = errorClasses.firstMatch { (someClass: JFacebookSDKErrors.Type) -> Bool in
 //            
 //                return someClass.isMineFacebookNativeError(nativeError)
 //            }

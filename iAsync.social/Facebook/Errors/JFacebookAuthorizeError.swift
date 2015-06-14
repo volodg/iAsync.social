@@ -10,11 +10,11 @@ public class JFacebookAuthorizeError : JFacebookError {
             comment:"")
     }
     
-    init() {
+    required public init() {
         super.init(description: "")
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

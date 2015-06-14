@@ -82,7 +82,7 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
 }
 
 func jffGenericFacebookGraphRequestLoader(
-    accessToken: FBSDKAccessToken,
+    accessToken accessToken: FBSDKAccessToken,
     graphPath  : String,
     httpMethod : String?,
     parameters : [String:AnyObject]?) -> JAsyncTypes<NSDictionary>.JAsync
@@ -103,5 +103,5 @@ func jffGenericFacebookGraphRequestLoader(
 
 func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> JAsyncTypes<NSDictionary>.JAsync
 {
-    return jffGenericFacebookGraphRequestLoader(accessToken, graphPath, nil, nil)
+    return jffGenericFacebookGraphRequestLoader(accessToken: accessToken, graphPath: graphPath, httpMethod: nil, parameters: nil)
 }
