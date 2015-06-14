@@ -57,7 +57,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
         
         loginManager.logInWithReadPermissions(
             Array(requestPermissions),
-            handler: { [weak self] (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+            handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
             
             if let error = error {
                 

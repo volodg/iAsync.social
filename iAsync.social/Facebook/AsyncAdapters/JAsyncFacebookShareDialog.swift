@@ -83,7 +83,7 @@ import FBSDKShareKit
 }
 
 func jffShareFacebookDialog(
-    viewController: UIViewController,
+    viewController viewController: UIViewController,
     contentURL    : NSURL,
     usersIDs      : [String],
     title         : String) -> JAsyncTypes<()>.JAsync

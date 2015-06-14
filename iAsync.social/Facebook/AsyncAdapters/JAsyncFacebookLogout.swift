@@ -40,7 +40,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         self.timer = timer
         
         //TODO remove ????
-        let cancel = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
+        let _ = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
             
             cancel()
             self?.notifyFinished()

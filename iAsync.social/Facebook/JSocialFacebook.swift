@@ -44,9 +44,7 @@ public class JSocialFacebook: NSObject {
             return asyncWithResult(session.tokenString)
         }
         
-        return bindSequenceOfAsyncs(
-            authFacebookAccessTokenLoader(),
-            binder)
+        return bindSequenceOfAsyncs(authFacebookAccessTokenLoader(), binder)
     }
     
     public class func authFacebookAccessTokenLoader() -> JAsyncTypes<FBSDKAccessToken>.JAsync {
@@ -163,7 +161,7 @@ public class JSocialFacebook: NSObject {
         let userInfoLoader = { (accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary>.JAsync in
     
             let parameters: [String:String] = fields.count > 0
-            ?["fields" : join(",", fields)]
+            ?["fields" : ",".join(fields)]
             :[:]
             
             return self.graphLoaderWithPath("me", parameters:parameters, accessToken:accessToken)
@@ -195,7 +193,11 @@ public class JSocialFacebook: NSObject {
         usersIDs      : [String],
         title         : String) -> JAsyncTypes<()>.JAsync
     {
-        return jffShareFacebookDialog(viewController, contentURL, usersIDs, title)
+        return jffShareFacebookDialog(
+            viewController: viewController,
+            contentURL    : contentURL    ,
+            usersIDs      : usersIDs      ,
+            title         : title)
     }
     
     class func graphLoaderWithPath(graphPath: String, accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary>.JAsync
@@ -216,7 +218,7 @@ public class JSocialFacebook: NSObject {
         accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary>.JAsync
     {
         let result = graphPath.stringByReplacingOccurrencesOfString(" ", withString:"+")
-        let graphLoader = jffGenericFacebookGraphRequestLoader(accessToken, result, httpMethod, parameters)
+        let graphLoader = jffGenericFacebookGraphRequestLoader(accessToken: accessToken, graphPath: result, httpMethod: httpMethod, parameters: parameters)
         
         return graphLoader
     }
@@ -254,7 +256,7 @@ public class JSocialFacebook: NSObject {
 //        
 //        func parser(result: NSDictionary) -> JAsyncTypes<[SocialFacebookUser]>.JAsync {
 //            
-//            println("result: \(result)")
+//            print("result: \(result)")
 //            func loadDataBlock() -> Result<[SocialFacebookUser]> {
 //                
 //                return JJsonValue.create(result) >>= { json -> Result<[SocialFacebookUser]> in
