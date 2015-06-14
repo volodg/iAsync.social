@@ -41,7 +41,7 @@ public class JSocialFacebook: NSObject {
         
         let binder = { (session: FBSDKAccessToken) -> JAsyncTypes<String>.JAsync in
             
-            return asyncWithResult(session.tokenString)
+            return async(result: session.tokenString)
         }
         
         return bindSequenceOfAsyncs(authFacebookAccessTokenLoader(), binder)
@@ -84,7 +84,7 @@ public class JSocialFacebook: NSObject {
             
             let loader: JAsyncTypes<()>.JAsync = accessToken != nil
                 ?jffFacebookLogout(renewSystemAuthorization)
-                :asyncWithResult(())
+                :async(result: ())
             
             return loader(
                 progressCallback: progressCallback,
@@ -246,7 +246,7 @@ public class JSocialFacebook: NSObject {
         let parser = { (result: NSDictionary) -> JAsyncTypes<SocialFacebookUser>.JAsync in
             
             let result = SocialFacebookUser.createSocialFacebookUserWithJsonObject(result)
-            return asyncWithJResult(result)
+            return async(resultOrError: result)
         }
         
         return parser
