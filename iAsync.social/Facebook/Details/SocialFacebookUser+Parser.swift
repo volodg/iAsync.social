@@ -12,7 +12,6 @@ import iAsync_utils
 
 import Argo
 import Runes
-import Box
 
 //  "updated_time" : "2014-09-13T08:38:51+0000",
 //  "verified": true }
@@ -123,7 +122,7 @@ extension SocialFacebookUser {
             
             let birthday: NSDate?
             
-            if let date = v.value.0.birthday {
+            if let date = v.0.birthday {
                 
                 birthday = fbUserBithdayDateFormat.dateFromString(date)
             } else {
@@ -132,19 +131,19 @@ extension SocialFacebookUser {
             }
             
             let result = SocialFacebookUser(
-                id         : v.value.0.id         ,
-                email      : v.value.0.email      ,
-                name       : v.value.0.name       ,
-                firstName  : v.value.0.firstName  ,
-                lastName   : v.value.0.lastName   ,
-                gender     : v.value.0.gender     ,
-                birthday   : birthday             ,
-                biography  : v.value.1.biography  ,
-                link       : v.value.1.link       ,
-                locale     : v.value.1.locale     ,
-                timezone   : v.value.1.timezone   ,
-                updatedTime: v.value.1.updatedTime,
-                verified   : v.value.1.verified
+                id         : v.0.id         ,
+                email      : v.0.email      ,
+                name       : v.0.name       ,
+                firstName  : v.0.firstName  ,
+                lastName   : v.0.lastName   ,
+                gender     : v.0.gender     ,
+                birthday   : birthday       ,
+                biography  : v.1.biography  ,
+                link       : v.1.link       ,
+                locale     : v.1.locale     ,
+                timezone   : v.1.timezone   ,
+                updatedTime: v.1.updatedTime,
+                verified   : v.1.verified
             )
             
             return Result.value(result)
