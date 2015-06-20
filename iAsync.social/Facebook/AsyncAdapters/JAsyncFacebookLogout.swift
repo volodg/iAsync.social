@@ -14,6 +14,8 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+import Result
+
 private class JAsyncFacebookLogout : JAsyncInterface {
     
     private var finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback?
@@ -78,7 +80,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     
     func notifyFinished()
     {
-        finishCallback?(result: Result.value(()))
+        finishCallback?(result: Result.success(()))
     }
 }
 

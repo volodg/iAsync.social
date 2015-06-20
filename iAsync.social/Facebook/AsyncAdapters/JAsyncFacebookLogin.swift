@@ -14,6 +14,8 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+import Result
+
 private class JAsyncFacebookLogin : JAsyncInterface {
 
     private let permissions: Set<String>
@@ -40,7 +42,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             currPermissions = token.permissions as? Set<String> ?? Set([])
             
             if permissions.isSubsetOf(currPermissions) {
-                finishCallback(result: Result.value(token))
+                finishCallback(result: Result.success(token))
                 return
             }
         } else {
@@ -74,17 +76,17 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                         
                         if let error = error {
                             
-                            finishCallback(result: Result.error(error))
+                            finishCallback(result: Result.failure(error))
                         } else if let token = result.token {
                             
-                            finishCallback(result: Result.value(token))
+                            finishCallback(result: Result.success(token))
                         } else if result.isCancelled {
                             
-                            finishCallback(result: Result.error(JAsyncFinishedByCancellationError()))
+                            finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
                         } else {
                             
                             //TODO wrap error
-                            finishCallback(result: Result.error(Error(description: "unsupported fb error, TODO fix")))
+                            finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
                         }
                     })
                 
@@ -104,7 +106,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             if let error = error {
                 
                 //TODO wrap error
-                finishCallback(result: Result.error(error))
+                finishCallback(result: Result.failure(error))
             } else if let token = result.token {
                 
                 if needsPublish {
@@ -115,30 +117,30 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                             
                             if let error = error {
                                 
-                                finishCallback(result: Result.error(error))
+                                finishCallback(result: Result.failure(error))
                             } else if let token = result.token {
                                 
-                                finishCallback(result: Result.value(token))
+                                finishCallback(result: Result.success(token))
                             } else if result.isCancelled {
                                 
-                                finishCallback(result: Result.error(JAsyncFinishedByCancellationError()))
+                                finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
                             } else {
                                 
                                 //TODO wrap error
-                                finishCallback(result: Result.error(Error(description: "unsupported fb error, TODO fix")))
+                                finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
                             }
                         })
                 } else {
                 
-                    finishCallback(result: Result.value(token))
+                    finishCallback(result: Result.success(token))
                 }
             } else if result.isCancelled {
                 
-                finishCallback(result: Result.error(JAsyncFinishedByCancellationError()))
+                finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
             } else {
                 
                 //TODO wrap error
-                finishCallback(result: Result.error(Error(description: "unsupported fb error, TODO fix")))
+                finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
             }
         })
     }
