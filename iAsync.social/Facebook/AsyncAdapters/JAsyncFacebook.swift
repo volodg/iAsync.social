@@ -14,6 +14,8 @@ import iAsync_async
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+import Result
+
 private class JFacebookGeneralRequestLoader : JAsyncInterface {
 
     private var requestConnection: FBSDKGraphRequestConnection?
@@ -60,10 +62,10 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
             
             if let graphObject = graphObject as? NSDictionary {
                 
-                finishCallback(result: Result.value(graphObject))
+                finishCallback(result: Result.success(graphObject))
             } else {
                 
-                finishCallback(result: Result.error(error))
+                finishCallback(result: Result.failure(error))
             }
         }
     }

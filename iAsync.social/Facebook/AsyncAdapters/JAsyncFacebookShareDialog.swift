@@ -13,6 +13,8 @@ import iAsync_utils
 
 import FBSDKShareKit
 
+import Result
+
 @objc public class JAsyncFacebookShareDialog: NSObject, JAsyncInterface, FBSDKSharingDelegate {
     
     private let viewController: UIViewController
@@ -68,17 +70,17 @@ import FBSDKShareKit
     
     @objc public func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!)
     {
-        finishCallback?(result: Result.value(()))
+        finishCallback?(result: Result.success(()))
     }
     
     public func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!)
     {
-        finishCallback?(result: Result.error(error))
+        finishCallback?(result: Result.failure(error))
     }
     
     public func sharerDidCancel(sharer: FBSDKSharing!)
     {
-        finishCallback?(result: Result.error(JAsyncFinishedByCancellationError()))
+        finishCallback?(result: Result.failure(JAsyncFinishedByCancellationError()))
     }
 }
 

@@ -111,7 +111,7 @@ public class JSocialFacebook: NSObject {
 //            let doneCallbackWrapper = { (result: Result<FBSession>) -> () in
 //                
 //                switch result {
-//                case let .Value(v):
+//                case let .Success(v):
 //                    self.facebookSession = v.value
 //                default:
 //                    break
