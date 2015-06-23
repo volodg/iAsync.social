@@ -51,7 +51,7 @@ extension SocialFacebookUserStruct1 : Decodable {
         (birthday   : String?)
         -> SocialFacebookUserStruct1
     {
-        return self(
+        return self.init(
             id         : id         ,
             email      : email      ,
             name       : name       ,
@@ -86,7 +86,7 @@ extension SocialFacebookUserStruct2 : Decodable {
         (verified   : Bool?)
         -> SocialFacebookUserStruct2
     {
-        return self(
+        return self.init(
             biography  : biography  ,
             link       : link       ,
             locale     : locale     ,
