@@ -39,32 +39,11 @@ private struct SocialFacebookUserStruct2 {
     let verified   : Bool?
 }
 
-extension SocialFacebookUserStruct1 : Decodable {
-    
-    static func create
-        (id         : String )
-        (email      : String?)
-        (name       : String?)
-        (firstName  : String?)
-        (lastName   : String?)
-        (gender     : String?)
-        (birthday   : String?)
-        -> SocialFacebookUserStruct1
-    {
-        return self.init(
-            id         : id         ,
-            email      : email      ,
-            name       : name       ,
-            firstName  : firstName  ,
-            lastName   : lastName   ,
-            gender     : gender     ,
-            birthday   : birthday
-        )
-    }
-    
+extension SocialFacebookUserStruct1 : Decodable
+{
     static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct1>
     {
-        return self.create
+        return curry(self.init)
             <^> j <| "id"
             <*> j <|? "email"
             <*> j <|? "name"
@@ -75,29 +54,11 @@ extension SocialFacebookUserStruct1 : Decodable {
     }
 }
 
-extension SocialFacebookUserStruct2 : Decodable {
-    
-    static func create
-        (biography  : String?)
-        (link       : String?)
-        (locale     : String?)
-        (timezone   : Int?)
-        (updatedTime: String?)
-        (verified   : Bool?)
-        -> SocialFacebookUserStruct2
-    {
-        return self.init(
-            biography  : biography  ,
-            link       : link       ,
-            locale     : locale     ,
-            timezone   : timezone   ,
-            updatedTime: updatedTime,
-            verified   : verified)
-    }
-    
+extension SocialFacebookUserStruct2 : Decodable
+{
     static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct2>
     {
-        return self.create
+        return curry(self.init)
             <^> j <|? "bio"
             <*> j <|? "link"
             <*> j <|? "locale"

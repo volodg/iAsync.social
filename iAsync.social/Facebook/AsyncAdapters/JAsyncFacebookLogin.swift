@@ -72,7 +72,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                 
                 loginManager.logInWithPublishPermissions(
                     Array(requestPublishPermissions),
-                    handler: { [weak self] (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+                    handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
                         
                         if let error = error {
                             
@@ -113,7 +113,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                     
                     loginManager.logInWithPublishPermissions(
                         Array(requestPublishPermissions),
-                        handler: { [weak self] (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
+                        handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
                             
                             if let error = error {
                                 
