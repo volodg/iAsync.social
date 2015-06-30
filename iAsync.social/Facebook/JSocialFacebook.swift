@@ -51,8 +51,8 @@ public class JSocialFacebook: NSObject {
         
         return { (
             progressCallback: JAsyncProgressCallback?,
-            stateCallback: JAsyncChangeStateCallback?,
-            doneCallback: JAsyncTypes<FBSDKAccessToken>.JDidFinishAsyncCallback?) -> JAsyncHandler in
+            stateCallback   : JAsyncChangeStateCallback?,
+            doneCallback    : JAsyncTypes<FBSDKAccessToken>.JDidFinishAsyncCallback?) -> JAsyncHandler in
             
             let permissions = Set(self.defaultAuthPermissions)
             
@@ -92,60 +92,6 @@ public class JSocialFacebook: NSObject {
                 finishCallback  : doneCallback)
         }
     }
-    
-//    class func authFacebookSessionWithPublishPermissions(permissions: [String]) -> JAsyncTypes<FBSession>.JAsync {
-//        
-//        let loader = { (
-//            progressCallback: JAsyncProgressCallback?,
-//            stateCallback: JAsyncChangeStateCallback?,
-//            doneCallback: JAsyncTypes<FBSession>.JDidFinishAsyncCallback?) -> JAsyncHandler in
-//            
-//            let session = self.facebookSession
-//            
-//            var currPermissions = Set(session.permissions as! [String])
-//            
-//            currPermissions.unionInPlace(permissions)
-//            
-//            let loader = jffFacebookLoginWithPublishPermissions(session, Array(currPermissions))
-//            
-//            let doneCallbackWrapper = { (result: Result<FBSession>) -> () in
-//                
-//                switch result {
-//                case let .Success(v):
-//                    self.facebookSession = v.value
-//                default:
-//                    break
-//                }
-//                
-//                doneCallback?(result: result)
-//            }
-//            
-//            return loader(
-//                progressCallback: progressCallback,
-//                stateCallback   : stateCallback   ,
-//                finishCallback  : doneCallbackWrapper)
-//        }
-//        
-//        let mergeParams: HashableDictionary<String, NSObject> = HashableDictionary(dict:
-//        [
-//            "methodName"  : __FUNCTION__,
-//            "permissions" : Array(Set(permissions))
-//        ])
-//        return cachedAsyncOp.asyncOpMerger(loader, uniqueKey:mergeParams)
-//    }
-//    
-//    class func publishStreamAccessSessionLoader() -> JAsyncTypes<FBSession>.JAsync {
-//        
-//        let authLoader = authFacebookSessionLoader()
-//        
-//        let binder = { (session: FBSession) -> JAsyncTypes<FBSession>.JAsync in
-//            
-//            let permissions = ["publish_stream", "user_birthday", "email"]
-//            return jffFacebookPublishAccessRequest(session, permissions)
-//        }
-//        
-//        return bindSequenceOfAsyncs(authLoader, binder)
-//    }
     
     public class func userInfoLoader() -> JAsyncTypes<SocialFacebookUser>.JAsync {
         

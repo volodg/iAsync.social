@@ -32,8 +32,8 @@ private class JAsyncFacebookLogin : JAsyncInterface {
     }
     
     func asyncWithResultCallback(
-        finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
-        stateCallback: JAsyncChangeStateCallback,
+        finishCallback  : JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
+        stateCallback   : JAsyncChangeStateCallback,
         progressCallback: JAsyncProgressCallback)
     {
         let currPermissions: Set<String>

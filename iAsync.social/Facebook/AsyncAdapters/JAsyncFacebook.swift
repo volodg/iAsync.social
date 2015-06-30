@@ -44,8 +44,8 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
     }
     
     func asyncWithResultCallback(
-        finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
-        stateCallback: JAsyncChangeStateCallback,
+        finishCallback  : JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
+        stateCallback   : JAsyncChangeStateCallback,
         progressCallback: JAsyncProgressCallback)
     {
         let fbRequest = FBSDKGraphRequest(
