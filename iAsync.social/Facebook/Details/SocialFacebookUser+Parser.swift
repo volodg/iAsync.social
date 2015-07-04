@@ -127,7 +127,7 @@ extension SocialFacebookUser {
             
             if let date = v.value.0.birthday {
                 
-                birthday = fbUserBithdayDateFormat.dateFromString(date)
+                birthday = createFbUserBithdayDateFormat().dateFromString(date)
             } else {
                 
                 birthday = nil
