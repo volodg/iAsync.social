@@ -11,21 +11,19 @@ import Foundation
 //Image urls docs
 // http://developers.facebook.com/docs/reference/api/using-pictures/
 
-public let fbUserBithdayDateFormat = createUserBithdayDateFormat()
-
-private func createUserBithdayDateFormat() -> NSDateFormatter {
-    
+public func createFbUserBithdayDateFormat() -> NSDateFormatter
+{
     let result = NSDateFormatter()
     
     result.dateFormat = "MM/dd/yyyy"
-    result.locale   = NSLocale(localeIdentifier: "en_US")
-    result.timeZone = NSTimeZone(name: "GMT")
+    result.locale     = NSLocale(localeIdentifier: "en_US")
+    result.timeZone   = NSTimeZone(name: "GMT")
     
     return result
 }
 
-public struct SocialFacebookUser {
-    
+public struct SocialFacebookUser
+{
     public let id         : String
     public let email      : String?
     public let name       : String?
