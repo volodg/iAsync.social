@@ -14,8 +14,6 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-import Result
-
 private class JAsyncFacebookLogin : JAsyncInterface {
 
     private let permissions: Set<String>
@@ -25,14 +23,15 @@ private class JAsyncFacebookLogin : JAsyncInterface {
         self.permissions = permissions
     }
     
-    typealias ResultType = FBSDKAccessToken
+    typealias ErrorT = NSError
+    typealias ValueT = FBSDKAccessToken
     
     var isForeignThreadResultCallback: Bool {
         return false
     }
     
     func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
+        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
         stateCallback   : JAsyncChangeStateCallback,
         progressCallback: JAsyncProgressCallback)
     {
@@ -42,7 +41,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             currPermissions = token.permissions as? Set<String> ?? Set([])
             
             if permissions.isSubsetOf(currPermissions) {
-                finishCallback(result: Result.success(token))
+                finishCallback(result: AsyncResult.success(token))
                 return
             }
         } else {
@@ -76,16 +75,16 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                         
                         if let error = error {
                             
-                            finishCallback(result: Result.failure(error))
+                            finishCallback(result: AsyncResult.failure(error))
                         } else if let token = result.token {
                             
-                            finishCallback(result: Result.success(token))
+                            finishCallback(result: AsyncResult.success(token))
                         } else if result.isCancelled {
                             
-                            finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
+                            finishCallback(result: .Interrupted)
                         } else {
                             
-                            finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
+                            finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
                         }
                     })
                 
@@ -105,7 +104,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             if let error = error {
                 
                 //TODO wrap error
-                finishCallback(result: Result.failure(error))
+                finishCallback(result: AsyncResult.failure(error))
             } else if let token = result.token {
                 
                 if needsPublish {
@@ -116,41 +115,41 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                             
                             if let error = error {
                                 
-                                finishCallback(result: Result.failure(error))
+                                finishCallback(result: AsyncResult.failure(error))
                             } else if let token = result.token {
                                 
-                                finishCallback(result: Result.success(token))
+                                finishCallback(result: AsyncResult.success(token))
                             } else if result.isCancelled {
                                 
-                                finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
+                                finishCallback(result: .Interrupted)
                             } else {
                                 
                                 //TODO wrap error
-                                finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
+                                finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
                             }
                         })
                 } else {
                 
-                    finishCallback(result: Result.success(token))
+                    finishCallback(result: AsyncResult.success(token))
                 }
             } else if result.isCancelled {
                 
-                finishCallback(result: Result.failure(JAsyncFinishedByCancellationError()))
+                finishCallback(result: .Interrupted)
             } else {
                 
                 //TODO wrap error
-                finishCallback(result: Result.failure(Error(description: "unsupported fb error, TODO fix")))
+                finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
             }
         })
     }
     
     func doTask(task: JAsyncHandlerTask)
     {
-        assert(task.rawValue <= JAsyncHandlerTask.Cancel.rawValue)
+        assert(task.unsubscribedOrCanceled)
     }
 }
 
-func jffFacebookLogin(permissions: Set<String>) -> JAsyncTypes<FBSDKAccessToken>.JAsync
+func jffFacebookLogin(permissions: Set<String>) -> JAsyncTypes<FBSDKAccessToken, NSError>.JAsync
 {
     let factory = { () -> JAsyncFacebookLogin in
         

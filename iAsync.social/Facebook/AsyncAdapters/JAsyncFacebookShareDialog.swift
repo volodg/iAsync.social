@@ -13,8 +13,6 @@ import iAsync_utils
 
 import FBSDKShareKit
 
-import Result
-
 @objc public class JAsyncFacebookShareDialog: NSObject, JAsyncInterface, FBSDKSharingDelegate {
     
     private let viewController: UIViewController
@@ -34,14 +32,15 @@ import Result
         self.title          = title
     }
     
-    public typealias ResultType = Void
+    public typealias ErrorT = NSError
+    public typealias ValueT = Void
     
     private var shareDialog: FBSDKShareDialog? = nil
     
-    private var finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback?
+    private var finishCallback: JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
     
     public func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
+        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
         stateCallback   : JAsyncChangeStateCallback,
         progressCallback: JAsyncProgressCallback)
     {
@@ -61,7 +60,7 @@ import Result
     
     public func doTask(task: JAsyncHandlerTask)
     {
-        assert(task.rawValue <= JAsyncHandlerTask.Cancel.rawValue)
+        assert(task.unsubscribedOrCanceled)
     }
     
     public var isForeignThreadResultCallback: Bool {
@@ -70,17 +69,17 @@ import Result
     
     @objc public func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!)
     {
-        finishCallback?(result: Result.success(()))
+        finishCallback?(result: AsyncResult.success(()))
     }
     
     public func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!)
     {
-        finishCallback?(result: Result.failure(error))
+        finishCallback?(result: AsyncResult.failure(error))
     }
     
     public func sharerDidCancel(sharer: FBSDKSharing!)
     {
-        finishCallback?(result: Result.failure(JAsyncFinishedByCancellationError()))
+        finishCallback?(result: .Interrupted)
     }
 }
 
@@ -88,7 +87,7 @@ func jffShareFacebookDialog(
     viewController: UIViewController,
     contentURL    : NSURL,
     usersIDs      : [String],
-    title         : String) -> JAsyncTypes<()>.JAsync
+    title         : String) -> JAsyncTypes<(), NSError>.JAsync
 {
     let factory = { () -> JAsyncFacebookShareDialog in
         
