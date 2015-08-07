@@ -12,8 +12,6 @@ import iAsync_utils
 
 import Argo
 
-import Result
-
 //  "updated_time" : "2014-09-13T08:38:51+0000",
 //  "verified": true }
 
@@ -69,7 +67,7 @@ extension SocialFacebookUserStruct2 : Decodable
 
 extension SocialFacebookUser {
     
-    static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<SocialFacebookUser, NSError>
+    static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> AsyncResult<SocialFacebookUser, NSError>
     {
         let struct1: Decoded<SocialFacebookUserStruct1> = decode(json)
         
@@ -108,11 +106,11 @@ extension SocialFacebookUser {
                 verified   : v.1.verified
             )
             
-            return Result.success(result)
+            return AsyncResult.success(result)
         case let .TypeMismatch(str):
-            return Result.failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
+            return AsyncResult.failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
         case let .MissingKey(str):
-            return Result.failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            return AsyncResult.failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
         }
     }
 }

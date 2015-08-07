@@ -14,8 +14,6 @@ import iAsync_async
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-import Result
-
 private class JFacebookGeneralRequestLoader : JAsyncInterface {
 
     private var requestConnection: FBSDKGraphRequestConnection?
@@ -37,14 +35,15 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
         self.parameters  = parameters
     }
     
-    typealias ResultType = NSDictionary
+    typealias ErrorT = NSError
+    typealias ValueT = NSDictionary
     
     var isForeignThreadResultCallback: Bool {
         return false
     }
     
     func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
+        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
         stateCallback   : JAsyncChangeStateCallback,
         progressCallback: JAsyncProgressCallback)
     {
@@ -62,17 +61,17 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
             
             if let graphObject = graphObject as? NSDictionary {
                 
-                finishCallback(result: Result.success(graphObject))
+                finishCallback(result: AsyncResult.success(graphObject))
             } else {
                 
-                finishCallback(result: Result.failure(error))
+                finishCallback(result: AsyncResult.failure(error))
             }
         }
     }
     
     func doTask(task: JAsyncHandlerTask)
     {
-        assert(task.rawValue <= JAsyncHandlerTask.Cancel.rawValue)
+        assert(task.unsubscribedOrCanceled)
         if task == JAsyncHandlerTask.Cancel {
             
             if let requestConnection = requestConnection {
@@ -87,7 +86,7 @@ func jffGenericFacebookGraphRequestLoader(
     accessToken accessToken: FBSDKAccessToken,
     graphPath  : String,
     httpMethod : String?,
-    parameters : [String:AnyObject]?) -> JAsyncTypes<NSDictionary>.JAsync
+    parameters : [String:AnyObject]?) -> JAsyncTypes<NSDictionary, NSError>.JAsync
 {
     let factory = { () -> JFacebookGeneralRequestLoader in
 
@@ -103,7 +102,7 @@ func jffGenericFacebookGraphRequestLoader(
     return JAsyncBuilder.buildWithAdapterFactory(factory)
 }
 
-func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> JAsyncTypes<NSDictionary>.JAsync
+func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> JAsyncTypes<NSDictionary, NSError>.JAsync
 {
     return jffGenericFacebookGraphRequestLoader(accessToken: accessToken, graphPath: graphPath, httpMethod: nil, parameters: nil)
 }
