@@ -31,9 +31,9 @@ private class JAsyncFacebookLogin : JAsyncInterface {
     }
     
     func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
-        stateCallback   : JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         let currPermissions: Set<String>
         
@@ -149,7 +149,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
     }
 }
 
-func jffFacebookLogin(permissions: Set<String>) -> JAsyncTypes<FBSDKAccessToken, NSError>.JAsync
+func jffFacebookLogin(permissions: Set<String>) -> AsyncTypes<FBSDKAccessToken, NSError>.Async
 {
     let factory = { () -> JAsyncFacebookLogin in
         

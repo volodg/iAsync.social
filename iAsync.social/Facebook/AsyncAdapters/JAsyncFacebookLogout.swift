@@ -16,7 +16,7 @@ import FBSDKLoginKit
 
 private class JAsyncFacebookLogout : JAsyncInterface {
     
-    private var finishCallback: JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
+    private var finishCallback: AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
     private var timer: Timer?
     
     private let renewSystemAuthorization: Bool
@@ -51,9 +51,9 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     var manager: FBSDKLoginManager?
     
     func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
-        stateCallback   : JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         self.finishCallback = finishCallback
         
@@ -83,7 +83,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     }
 }
 
-func jffFacebookLogout(renewSystemAuthorization: Bool) -> JAsyncTypes<(), NSError>.JAsync
+func jffFacebookLogout(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async
 {
     let factory = { () -> JAsyncFacebookLogout in
         

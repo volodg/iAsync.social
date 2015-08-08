@@ -37,12 +37,12 @@ import FBSDKShareKit
     
     private var shareDialog: FBSDKShareDialog? = nil
     
-    private var finishCallback: JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
+    private var finishCallback: AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
     
     public func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
-        stateCallback   : JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         self.finishCallback = finishCallback
         
@@ -87,7 +87,7 @@ func jffShareFacebookDialog(
     viewController: UIViewController,
     contentURL    : NSURL,
     usersIDs      : [String],
-    title         : String) -> JAsyncTypes<(), NSError>.JAsync
+    title         : String) -> AsyncTypes<(), NSError>.Async
 {
     let factory = { () -> JAsyncFacebookShareDialog in
         

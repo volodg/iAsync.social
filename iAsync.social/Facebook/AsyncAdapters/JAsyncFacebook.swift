@@ -43,9 +43,9 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
     }
     
     func asyncWithResultCallback(
-        finishCallback  : JAsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
-        stateCallback   : JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         let fbRequest = FBSDKGraphRequest(
             graphPath  : graphPath ,
@@ -86,7 +86,7 @@ func jffGenericFacebookGraphRequestLoader(
     accessToken: FBSDKAccessToken,
     graphPath  : String,
     httpMethod : String?,
-    parameters : [String:AnyObject]?) -> JAsyncTypes<NSDictionary, NSError>.JAsync
+    parameters : [String:AnyObject]?) -> AsyncTypes<NSDictionary, NSError>.Async
 {
     let factory = { () -> JFacebookGeneralRequestLoader in
 
@@ -102,7 +102,7 @@ func jffGenericFacebookGraphRequestLoader(
     return JAsyncBuilder.buildWithAdapterFactory(factory)
 }
 
-func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> JAsyncTypes<NSDictionary, NSError>.JAsync
+func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> AsyncTypes<NSDictionary, NSError>.Async
 {
     return jffGenericFacebookGraphRequestLoader(accessToken, graphPath, nil, nil)
 }
