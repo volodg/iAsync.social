@@ -37,22 +37,24 @@ public class JSocialFacebook: NSObject {
         return FBSDKAccessToken.currentAccessToken() != nil
     }
 
-    public class func authFacebookAccessTokenStringLoader() -> JAsyncTypes<String, NSError>.JAsync {
+    public class func authFacebookAccessTokenStringLoader() -> AsyncTypes<String, NSError>.Async {
         
-        let binder = { (session: FBSDKAccessToken) -> JAsyncTypes<String, NSError>.JAsync in
+        let binder = { (session: FBSDKAccessToken) -> AsyncTypes<String, NSError>.Async in
             
             return async(value: session.tokenString)
         }
         
-        return bindSequenceOfAsyncs(authFacebookAccessTokenLoader(), binder)
+        return bindSequenceOfAsyncs(
+            authFacebookAccessTokenLoader(),
+            binder)
     }
     
-    public class func authFacebookAccessTokenLoader() -> JAsyncTypes<FBSDKAccessToken, NSError>.JAsync {
+    public class func authFacebookAccessTokenLoader() -> AsyncTypes<FBSDKAccessToken, NSError>.Async {
         
         return { (
-            progressCallback: JAsyncProgressCallback?,
-            stateCallback   : JAsyncChangeStateCallback?,
-            doneCallback    : JAsyncTypes<FBSDKAccessToken, NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
+            progressCallback: AsyncProgressCallback?,
+            stateCallback   : AsyncChangeStateCallback?,
+            doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
             
             let permissions = Set(self.defaultAuthPermissions)
             
@@ -73,16 +75,16 @@ public class JSocialFacebook: NSObject {
         }
     }
     
-    class func logoutLoaderWithRenewSystemAuthorization(renewSystemAuthorization: Bool) -> JAsyncTypes<(), NSError>.JAsync {
+    class func logoutLoaderWithRenewSystemAuthorization(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async {
         
         return { (
-            progressCallback: JAsyncProgressCallback?,
-            stateCallback   : JAsyncChangeStateCallback?,
-            doneCallback    : JAsyncTypes<(), NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
+            progressCallback: AsyncProgressCallback?,
+            stateCallback   : AsyncChangeStateCallback?,
+            doneCallback    : AsyncTypes<(), NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
             
             let accessToken = FBSDKAccessToken.currentAccessToken()
             
-            let loader: JAsyncTypes<(), NSError>.JAsync = accessToken != nil
+            let loader: AsyncTypes<(), NSError>.Async = accessToken != nil
                 ?jffFacebookLogout(renewSystemAuthorization)
                 :async(value: ())
             
@@ -93,18 +95,18 @@ public class JSocialFacebook: NSObject {
         }
     }
     
-    public class func userInfoLoader() -> JAsyncTypes<SocialFacebookUser, NSError>.JAsync {
+    public class func userInfoLoader() -> AsyncTypes<SocialFacebookUser, NSError>.Async {
         
         let fields = ["id", "email", "name", "gender", "birthday", "picture", "bio"]
         
         return userInfoLoaderWithFields(fields)
     }
     
-    public class func userInfoResponseLoader(fields: [String]) -> JAsyncTypes<NSDictionary, NSError>.JAsync {
+    public class func userInfoResponseLoader(fields: [String]) -> AsyncTypes<NSDictionary, NSError>.Async {
     
         let accessTokenLoader = authFacebookAccessTokenLoader()
 
-        let userInfoLoader = { (accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary, NSError>.JAsync in
+        let userInfoLoader = { (accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async in
     
             let parameters: [String:String] = fields.count > 0
             ?["fields" : ",".join(fields)]
@@ -124,7 +126,7 @@ public class JSocialFacebook: NSObject {
         return trySequenceOfAsyncs(loader, reloadUser)
     }
     
-    public class func userInfoLoaderWithFields(fields: [String]) -> JAsyncTypes<SocialFacebookUser, NSError>.JAsync
+    public class func userInfoLoaderWithFields(fields: [String]) -> AsyncTypes<SocialFacebookUser, NSError>.Async
     {
         let userInfoLoader = userInfoResponseLoader(fields)
         
@@ -137,7 +139,7 @@ public class JSocialFacebook: NSObject {
         viewController: UIViewController,
         contentURL    : NSURL,
         usersIDs      : [String],
-        title         : String) -> JAsyncTypes<(), NSError>.JAsync
+        title         : String) -> AsyncTypes<(), NSError>.Async
     {
         return jffShareFacebookDialog(
             viewController: viewController,
@@ -146,13 +148,13 @@ public class JSocialFacebook: NSObject {
             title         : title)
     }
     
-    class func graphLoaderWithPath(graphPath: String, accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary, NSError>.JAsync
+    class func graphLoaderWithPath(graphPath: String, accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async
     {
         return graphLoaderWithPath(graphPath, parameters:nil, accessToken:accessToken)
     }
     
     public class func graphLoaderWithPath(
-        graphPath: String, parameters: [String:AnyObject]?, accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary, NSError>.JAsync
+        graphPath: String, parameters: [String:AnyObject]?, accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async
     {
         return graphLoaderWithPath(graphPath, httpMethod: "GET", parameters:parameters, accessToken:accessToken)
     }
@@ -161,7 +163,7 @@ public class JSocialFacebook: NSObject {
         graphPath  : String,
         httpMethod : String,
         parameters : [String:AnyObject]?,
-        accessToken: FBSDKAccessToken) -> JAsyncTypes<NSDictionary, NSError>.JAsync
+        accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async
     {
         let result = graphPath.stringByReplacingOccurrencesOfString(" ", withString:"+")
         let graphLoader = jffGenericFacebookGraphRequestLoader(accessToken: accessToken, graphPath: result, httpMethod: httpMethod, parameters: parameters)
@@ -169,7 +171,7 @@ public class JSocialFacebook: NSObject {
         return graphLoader
     }
     
-//    class func postImage(image: UIImage, message: String?) -> JAsyncTypes<NSDictionary>.JAsync
+//    class func postImage(image: UIImage, message: String?) -> AsyncTypes<NSDictionary>.Async
 //    {
 //        let parameters: [String:AnyObject] =
 //        [
@@ -177,7 +179,7 @@ public class JSocialFacebook: NSObject {
 //            "image"   : UIImageJPEGRepresentation(image, 1.0)
 //        ]
 //        
-//        let binder = { (session: FBSession) -> JAsyncTypes<NSDictionary>.JAsync in
+//        let binder = { (session: FBSession) -> AsyncTypes<NSDictionary>.Async in
 //            
 //            return self.graphLoaderWithPath("me/photos", httpMethod: "POST", parameters: parameters, session:session)
 //        }
@@ -187,9 +189,9 @@ public class JSocialFacebook: NSObject {
 //        return bindSequenceOfAsyncs(getAccessLoader, binder)
 //    }
 
-    private class func userParser() -> JAsyncTypes2<NSDictionary, SocialFacebookUser, NSError>.JAsyncBinder
+    private class func userParser() -> AsyncTypes2<NSDictionary, SocialFacebookUser, NSError>.JAsyncBinder
     {
-        let parser = { (result: NSDictionary) -> JAsyncTypes<SocialFacebookUser, NSError>.JAsync in
+        let parser = { (result: NSDictionary) -> AsyncTypes<SocialFacebookUser, NSError>.Async in
             
             let result = SocialFacebookUser.createSocialFacebookUserWithJsonObject(result)
             return async(result: result)
@@ -198,9 +200,9 @@ public class JSocialFacebook: NSObject {
         return parser
     }
     
-//    private class func usersParser() -> JAsyncTypes2<NSDictionary, [SocialFacebookUser]>.JAsyncBinder {
+//    private class func usersParser() -> AsyncTypes2<NSDictionary, [SocialFacebookUser]>.JAsyncBinder {
 //        
-//        func parser(result: NSDictionary) -> JAsyncTypes<[SocialFacebookUser]>.JAsync {
+//        func parser(result: NSDictionary) -> AsyncTypes<[SocialFacebookUser]>.Async {
 //            
 //            print("result: \(result)")
 //            func loadDataBlock() -> AsyncResult<[SocialFacebookUser]> {
@@ -220,11 +222,11 @@ public class JSocialFacebook: NSObject {
 //        return parser
 //    }
     
-//    public class func friendsLoaderWithFields(fields: [String], uid: String = "me") -> JAsyncTypes<[SocialFacebookUser]>.JAsync {
+//    public class func friendsLoaderWithFields(fields: [String], uid: String = "me") -> AsyncTypes<[SocialFacebookUser]>.Async {
 //        
 //        let authLoader = JSocialFacebook.authFacebookAccessTokenLoader()
 //        
-//        func binder(accessToken: FBSDKAccessToken) -> JAsyncTypes<[SocialFacebookUser]>.JAsync {
+//        func binder(accessToken: FBSDKAccessToken) -> AsyncTypes<[SocialFacebookUser]>.Async {
 //            
 //            let graphPath = "/\(uid)/taggable_friends"
 //            
