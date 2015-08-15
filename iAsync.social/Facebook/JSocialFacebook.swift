@@ -60,8 +60,7 @@ public class JSocialFacebook: NSObject {
             
             let loader = jffFacebookLogin(permissions)
             
-            let mergeObject: HashableDictionary<String,NSObject> = HashableDictionary(dict:
-                [
+            let mergeObject: HashableDictionary<String,NSObject> = HashableDictionary([
                     "methodName"  : __FUNCTION__,
                     "permissions" : Array(permissions)
                 ])
