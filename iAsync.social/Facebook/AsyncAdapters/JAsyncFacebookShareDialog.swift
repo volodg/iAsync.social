@@ -37,10 +37,10 @@ import FBSDKShareKit
     
     private var shareDialog: FBSDKShareDialog? = nil
     
-    private var finishCallback: AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback?
+    private var finishCallback: AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback?
     
     public func asyncWithResultCallback(
-        finishCallback  : AsyncTypes<ValueT, ErrorT>.JDidFinishAsyncCallback,
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback,
         stateCallback   : AsyncChangeStateCallback,
         progressCallback: AsyncProgressCallback)
     {

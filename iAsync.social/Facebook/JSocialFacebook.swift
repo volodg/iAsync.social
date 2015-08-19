@@ -54,7 +54,7 @@ public class JSocialFacebook: NSObject {
         return { (
             progressCallback: AsyncProgressCallback?,
             stateCallback   : AsyncChangeStateCallback?,
-            doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
+            doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.DidFinishAsyncCallback?) -> JAsyncHandler in
             
             let permissions = Set(self.defaultAuthPermissions)
             
@@ -79,7 +79,7 @@ public class JSocialFacebook: NSObject {
         return { (
             progressCallback: AsyncProgressCallback?,
             stateCallback   : AsyncChangeStateCallback?,
-            doneCallback    : AsyncTypes<(), NSError>.JDidFinishAsyncCallback?) -> JAsyncHandler in
+            doneCallback    : AsyncTypes<(), NSError>.DidFinishAsyncCallback?) -> JAsyncHandler in
             
             let accessToken = FBSDKAccessToken.currentAccessToken()
             
