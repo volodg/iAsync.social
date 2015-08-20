@@ -188,7 +188,7 @@ public class JSocialFacebook: NSObject {
 //        return bindSequenceOfAsyncs(getAccessLoader, binder)
 //    }
 
-    private class func userParser() -> AsyncTypes2<NSDictionary, SocialFacebookUser, NSError>.JAsyncBinder
+    private class func userParser() -> AsyncTypes2<NSDictionary, SocialFacebookUser, NSError>.AsyncBinder
     {
         let parser = { (result: NSDictionary) -> AsyncTypes<SocialFacebookUser, NSError>.Async in
             
@@ -199,7 +199,7 @@ public class JSocialFacebook: NSObject {
         return parser
     }
     
-//    private class func usersParser() -> AsyncTypes2<NSDictionary, [SocialFacebookUser]>.JAsyncBinder {
+//    private class func usersParser() -> AsyncTypes2<NSDictionary, [SocialFacebookUser]>.AsyncBinder {
 //        
 //        func parser(result: NSDictionary) -> AsyncTypes<[SocialFacebookUser]>.Async {
 //            
