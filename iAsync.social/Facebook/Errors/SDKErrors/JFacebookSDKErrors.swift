@@ -1,7 +1,6 @@
 import Foundation
 
 import iAsync_utils
-//import FacebookSDK
 
 public class JFacebookSDKErrors : Error {
     
