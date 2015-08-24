@@ -61,8 +61,8 @@ private class JAsyncFacebookLogin : JAsyncInterface {
         
         requestPermissions.subtractInPlace(publishPermissions)
         
-        if let token = FBSDKAccessToken.currentAccessToken()
-        {
+        if let token = FBSDKAccessToken.currentAccessToken() {
+            
             let currPermissions = token.permissions as? Set<String> ?? Set([])
             
             if requestPermissions.isSubsetOf(currPermissions)
