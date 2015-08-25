@@ -97,32 +97,25 @@ public class JSocialFacebook: NSObject {
     public class func userInfoLoader() -> AsyncTypes<SocialFacebookUser, NSError>.Async {
         
         let fields = ["id", "email", "name", "gender", "birthday", "picture", "bio"]
-        
         return userInfoLoaderWithFields(fields)
     }
     
     public class func userInfoResponseLoader(fields: [String]) -> AsyncTypes<NSDictionary, NSError>.Async {
-    
+        
         let accessTokenLoader = authFacebookAccessTokenLoader()
-
+        
         let userInfoLoader = { (accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async in
-    
+            
             let parameters: [String:String] = fields.count > 0
-            ?["fields" : join(",", fields)]
-            :[:]
+                ?["fields" : join(",", fields)]
+                :[:]
             
             return self.graphLoaderWithPath("me", parameters:parameters, accessToken:accessToken)
         }
         
         let loader = bindSequenceOfAsyncs(accessTokenLoader, userInfoLoader)
-    
-        let reloadSession = sequenceOfAsyncs(
-            self.logoutLoaderWithRenewSystemAuthorization(true),
-            accessTokenLoader)
         
-        let reloadUser = sequenceOfAsyncs(reloadSession, loader)
-        
-        return trySequenceOfAsyncs(loader, reloadUser)
+        return loader
     }
     
     public class func userInfoLoaderWithFields(fields: [String]) -> AsyncTypes<SocialFacebookUser, NSError>.Async

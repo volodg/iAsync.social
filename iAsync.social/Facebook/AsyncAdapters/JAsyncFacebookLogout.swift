@@ -25,12 +25,11 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     typealias ValueT = ()
     
     init(renewSystemAuthorization: Bool) {
-        
         self.renewSystemAuthorization = renewSystemAuthorization
     }
     
     var isForeignThreadResultCallback: Bool {
-        return false
+        return true
     }
     
     func logOut() {
@@ -57,13 +56,12 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     {
         self.finishCallback = finishCallback
         
-        let manager = FBSDKLoginManager()
+        let manager  = FBSDKLoginManager()
         self.manager = manager
         
         if renewSystemAuthorization {
             
             FBSDKLoginManager.renewSystemCredentials({ (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
-                
                 self.logOut()
             })
             return
@@ -72,13 +70,11 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         logOut()
     }
     
-    func doTask(task: JAsyncHandlerTask)
-    {
+    func doTask(task: JAsyncHandlerTask) {
         assert(task.unsubscribedOrCanceled)
     }
     
-    func notifyFinished()
-    {
+    func notifyFinished() {
         finishCallback?(result: AsyncResult.success(()))
     }
 }
