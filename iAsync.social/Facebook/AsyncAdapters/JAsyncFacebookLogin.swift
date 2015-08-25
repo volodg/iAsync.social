@@ -108,26 +108,30 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             } else if let token = result.token {
                 
                 if needsPublish {
-                    
-                    loginManager.logInWithPublishPermissions(
-                        Array(requestPublishPermissions),
-                        handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
-                            
-                            if let error = error {
+
+                    //can not be called within callback
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        loginManager.logInWithPublishPermissions(
+                            Array(requestPublishPermissions),
+                            handler: { (result: FBSDKLoginManagerLoginResult!, error: NSError!) -> Void in
                                 
-                                finishCallback(result: AsyncResult.failure(error))
-                            } else if let token = result.token {
-                                
-                                finishCallback(result: AsyncResult.success(token))
-                            } else if result.isCancelled {
-                                
-                                finishCallback(result: .Interrupted)
-                            } else {
-                                
-                                //TODO wrap error
-                                finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
-                            }
-                        })
+                                if let error = error {
+                                    
+                                    finishCallback(result: AsyncResult.failure(error))
+                                } else if let token = result.token {
+                                    
+                                    finishCallback(result: AsyncResult.success(token))
+                                } else if result.isCancelled {
+                                    
+                                    finishCallback(result: .Interrupted)
+                                } else {
+                                    
+                                    //TODO wrap error
+                                    finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
+                                }
+                            })
+                    })
                 } else {
                 
                     finishCallback(result: AsyncResult.success(token))

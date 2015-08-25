@@ -64,7 +64,7 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
                 finishCallback(result: AsyncResult.success(graphObject))
             } else {
                 
-                finishCallback(result: AsyncResult.failure(error))
+                finishCallback(result: AsyncResult.failure(JFacebookError(nativeError: error)))
             }
         }
     }
