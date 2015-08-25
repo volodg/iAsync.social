@@ -107,7 +107,7 @@ public class JSocialFacebook: NSObject {
         let userInfoLoader = { (accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async in
             
             let parameters: [String:String] = fields.count > 0
-                ?["fields" : ",".join(fields)]
+                ?["fields" : fields.joinWithSeparator(",")]
                 :[:]
             
             return self.graphLoaderWithPath("me", parameters:parameters, accessToken:accessToken)

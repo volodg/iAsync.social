@@ -31,7 +31,7 @@ public class JFacebookError : JSocialError {
     
     public override var localizedDescription: String {
         
-        if let descr = self.nativeError.userInfo?["NSLocalizedRecoverySuggestion"] as? String {
+        if let descr = self.nativeError.userInfo["NSLocalizedRecoverySuggestion"] as? String {
             return descr
         }
         
@@ -40,7 +40,7 @@ public class JFacebookError : JSocialError {
     
     public lazy var fbErrorType: FbErrorType = { [unowned self] () -> FbErrorType in
         
-        if let descr = self.nativeError.userInfo?["com.facebook.sdk:FBSDKErrorDeveloperMessageKey"] as? String {
+        if let descr = self.nativeError.userInfo["com.facebook.sdk:FBSDKErrorDeveloperMessageKey"] as? String {
             
             let table: [String:FbErrorType] = [
                 "(#4) Application request limit reached" : FbErrorType.RequestLimitReached
