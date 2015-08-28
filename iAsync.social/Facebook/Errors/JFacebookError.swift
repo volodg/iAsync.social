@@ -25,7 +25,7 @@ public class JFacebookError : JSocialError {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func jffErrorsDomain() -> String {
+    override func iAsyncErrorsDomain() -> String {
         return "com.just_for_fun.facebook.library"
     }
     
