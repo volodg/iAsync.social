@@ -1,5 +1,5 @@
 //
-//  JSocialFacebook.swift
+//  SocialFacebook.swift
 //  iAsync_social
 //
 //  Created by Vladimir Gorbenko on 08.10.14.
@@ -17,46 +17,31 @@ import FBSDKLoginKit
 
 private let cachedAsyncOp = JCachedAsync<HashableDictionary<String, NSObject>, FBSDKAccessToken, NSError>()
 
-//TODO remove NSObject
-public class JSocialFacebook: NSObject {
+public class SocialFacebook {
 
-    private struct Static {
-        static var defaultAuthPermissions = ["email", "user_birthday"]
-    }
-    
-    public class var defaultAuthPermissions: [String] {
-        get {
-            return Static.defaultAuthPermissions
-        }
-        set {
-            Static.defaultAuthPermissions = newValue
-        }
-    }
-    
     public static func isActiveAccessToken() -> Bool {
         return FBSDKAccessToken.currentAccessToken() != nil
     }
 
-    public class func authFacebookAccessTokenStringLoader() -> AsyncTypes<String, NSError>.Async {
+    public class func authFacebookAccessTokenStringLoader(authPermissions: [String]) -> AsyncTypes<String, NSError>.Async {
         
         let binder = { (session: FBSDKAccessToken) -> AsyncTypes<String, NSError>.Async in
-            
             return async(value: session.tokenString)
         }
         
         return bindSequenceOfAsyncs(
-            authFacebookAccessTokenLoader(),
+            authFacebookAccessTokenLoader(authPermissions),
             binder)
     }
     
-    public class func authFacebookAccessTokenLoader() -> AsyncTypes<FBSDKAccessToken, NSError>.Async {
+    public class func authFacebookAccessTokenLoader(authPermissions: [String]) -> AsyncTypes<FBSDKAccessToken, NSError>.Async {
         
         return { (
             progressCallback: AsyncProgressCallback?,
             stateCallback   : AsyncChangeStateCallback?,
             doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.DidFinishAsyncCallback?) -> JAsyncHandler in
             
-            let permissions = Set(self.defaultAuthPermissions)
+            let permissions = Set(authPermissions)
             
             let loader = jffFacebookLogin(permissions)
             
@@ -74,7 +59,13 @@ public class JSocialFacebook: NSObject {
         }
     }
     
-    class func logoutLoaderWithRenewSystemAuthorization(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async {
+    public static func currentAccessToken() -> FBSDKAccessToken? {
+        
+        let accessToken = FBSDKAccessToken.currentAccessToken()
+        return accessToken
+    }
+    
+    public static func logoutLoaderWithRenewSystemAuthorization(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async {
         
         return { (
             progressCallback: AsyncProgressCallback?,
@@ -84,7 +75,7 @@ public class JSocialFacebook: NSObject {
             let accessToken = FBSDKAccessToken.currentAccessToken()
             
             let loader: AsyncTypes<(), NSError>.Async = accessToken != nil
-                ?jffFacebookLogout(renewSystemAuthorization)
+                ?facebookLogout(renewSystemAuthorization)
                 :async(value: ())
             
             return loader(
@@ -94,15 +85,15 @@ public class JSocialFacebook: NSObject {
         }
     }
     
-    public class func userInfoLoader() -> AsyncTypes<SocialFacebookUser, NSError>.Async {
+    public class func userInfoLoader(authPermissions: [String]) -> AsyncTypes<SocialFacebookUser, NSError>.Async {
         
         let fields = ["id", "email", "name", "gender", "birthday", "picture", "bio"]
-        return userInfoLoaderWithFields(fields)
+        return userInfoLoaderWithFields(fields, authPermissions: authPermissions)
     }
     
-    public class func userInfoResponseLoader(fields: [String]) -> AsyncTypes<NSDictionary, NSError>.Async {
+    public class func userInfoResponseLoader(fields: [String], authPermissions: [String]) -> AsyncTypes<NSDictionary, NSError>.Async {
         
-        let accessTokenLoader = authFacebookAccessTokenLoader()
+        let accessTokenLoader = authFacebookAccessTokenLoader(authPermissions)
         
         let userInfoLoader = { (accessToken: FBSDKAccessToken) -> AsyncTypes<NSDictionary, NSError>.Async in
             
@@ -118,9 +109,9 @@ public class JSocialFacebook: NSObject {
         return loader
     }
     
-    public class func userInfoLoaderWithFields(fields: [String]) -> AsyncTypes<SocialFacebookUser, NSError>.Async
+    public class func userInfoLoaderWithFields(fields: [String], authPermissions: [String]) -> AsyncTypes<SocialFacebookUser, NSError>.Async
     {
-        let userInfoLoader = userInfoResponseLoader(fields)
+        let userInfoLoader = userInfoResponseLoader(fields, authPermissions: authPermissions)
         
         let parser = self.userParser()
             

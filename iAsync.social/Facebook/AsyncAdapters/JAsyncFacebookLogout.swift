@@ -79,7 +79,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     }
 }
 
-func jffFacebookLogout(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async
+func facebookLogout(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async
 {
     let factory = { () -> JAsyncFacebookLogout in
         
