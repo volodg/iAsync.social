@@ -118,7 +118,7 @@ extension SocialFacebookUser {
         }
         
         switch structs {
-        case let .Success(v):
+        case .Success(let v):
             
             let birthday: NSDate?
             
@@ -147,9 +147,9 @@ extension SocialFacebookUser {
             )
             
             return AsyncResult.success(result)
-        case let .TypeMismatch(str):
+        case .TypeMismatch(let str):
             return AsyncResult.failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
-        case let .MissingKey(str):
+        case .MissingKey(let str):
             return AsyncResult.failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
         }
     }
