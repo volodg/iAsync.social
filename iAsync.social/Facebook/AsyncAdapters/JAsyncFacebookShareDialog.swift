@@ -58,7 +58,7 @@ import FBSDKShareKit
             delegate   : self)
     }
     
-    public func doTask(task: JAsyncHandlerTask)
+    public func doTask(task: AsyncHandlerTask)
     {
         assert(task.unsubscribedOrCanceled)
     }

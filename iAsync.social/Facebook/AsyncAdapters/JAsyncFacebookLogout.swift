@@ -70,7 +70,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         logOut()
     }
     
-    func doTask(task: JAsyncHandlerTask) {
+    func doTask(task: AsyncHandlerTask) {
         assert(task.unsubscribedOrCanceled)
     }
     

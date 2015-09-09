@@ -69,10 +69,10 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
         }
     }
     
-    func doTask(task: JAsyncHandlerTask)
+    func doTask(task: AsyncHandlerTask)
     {
         assert(task.unsubscribedOrCanceled)
-        if task == JAsyncHandlerTask.Cancel {
+        if task == .Cancel {
             
             if let requestConnection = requestConnection {
                 self.requestConnection = nil
