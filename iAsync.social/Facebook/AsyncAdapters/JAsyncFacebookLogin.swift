@@ -147,7 +147,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
         })
     }
     
-    func doTask(task: JAsyncHandlerTask)
+    func doTask(task: AsyncHandlerTask)
     {
         assert(task.unsubscribedOrCanceled)
     }
