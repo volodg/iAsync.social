@@ -11,8 +11,6 @@ import Foundation
 import iAsync_async
 import iAsync_utils
 
-//TODO import JJsonTools
-
 import FBSDKLoginKit
 
 private let cachedAsyncOp = JCachedAsync<HashableDictionary<String, NSObject>, FBSDKAccessToken, NSError>()
