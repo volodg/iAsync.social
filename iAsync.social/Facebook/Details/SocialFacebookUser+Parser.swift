@@ -114,7 +114,7 @@ extension SocialFacebookUser {
         let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2)> in
             
             let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
-            return res2.map( { (res1, $0) } )
+            return res2.map { (res1, $0) }
         }
         
         switch structs {

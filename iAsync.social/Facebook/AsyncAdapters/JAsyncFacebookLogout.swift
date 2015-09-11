@@ -14,7 +14,7 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JAsyncFacebookLogout : JAsyncInterface {
+private class JAsyncFacebookLogout : AsyncInterface {
     
     private var finishCallback: AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback?
     private var timer: Timer?
@@ -40,7 +40,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         self.timer = timer
         
         //TODO remove ????
-        let cancel = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
+        let _ = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
             
             cancel()
             self?.notifyFinished()
@@ -87,5 +87,5 @@ func facebookLogout(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.A
         return object
     }
     
-    return JAsyncBuilder.buildWithAdapterFactory(factory)
+    return AsyncBuilder.buildWithAdapterFactory(factory)
 }
