@@ -106,11 +106,11 @@ extension SocialFacebookUser {
                 verified   : v.1.verified
             )
             
-            return AsyncResult.success(result)
+            return .Success(result)
         case .TypeMismatch(let str):
-            return AsyncResult.failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
+            return .Failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
         case .MissingKey(let str):
-            return AsyncResult.failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            return .Failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
         }
     }
 }

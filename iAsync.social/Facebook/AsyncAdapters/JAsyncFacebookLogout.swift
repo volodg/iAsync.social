@@ -75,7 +75,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     }
     
     func notifyFinished() {
-        finishCallback?(result: AsyncResult.success(()))
+        finishCallback?(result: .Success(()))
     }
 }
 

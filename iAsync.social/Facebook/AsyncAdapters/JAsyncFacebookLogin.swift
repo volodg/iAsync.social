@@ -41,7 +41,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             currPermissions = token.permissions as? Set<String> ?? Set([])
             
             if permissions.isSubsetOf(currPermissions) {
-                finishCallback(result: AsyncResult.success(token))
+                finishCallback(result: .Success(token))
                 return
             }
         } else {
@@ -75,16 +75,16 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                         
                         if let error = error {
                             
-                            finishCallback(result: AsyncResult.failure(error))
+                            finishCallback(result: .Failure(error))
                         } else if let token = result.token {
                             
-                            finishCallback(result: AsyncResult.success(token))
+                            finishCallback(result: .Success(token))
                         } else if result.isCancelled {
                             
                             finishCallback(result: .Interrupted)
                         } else {
                             
-                            finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
+                            finishCallback(result: .Failure(Error(description: "unsupported fb error, TODO fix")))
                         }
                     })
                 
@@ -104,7 +104,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             if let error = error {
                 
                 //TODO wrap error
-                finishCallback(result: AsyncResult.failure(error))
+                finishCallback(result: .Failure(error))
             } else if let token = result.token {
                 
                 if needsPublish {
@@ -118,23 +118,23 @@ private class JAsyncFacebookLogin : JAsyncInterface {
                                 
                                 if let error = error {
                                     
-                                    finishCallback(result: AsyncResult.failure(error))
+                                    finishCallback(result: .Failure(error))
                                 } else if let token = result.token {
                                     
-                                    finishCallback(result: AsyncResult.success(token))
+                                    finishCallback(result: .Success(token))
                                 } else if result.isCancelled {
                                     
                                     finishCallback(result: .Interrupted)
                                 } else {
                                     
                                     //TODO wrap error
-                                    finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
+                                    finishCallback(result: .Failure(Error(description: "unsupported fb error, TODO fix")))
                                 }
                             })
                     })
                 } else {
                 
-                    finishCallback(result: AsyncResult.success(token))
+                    finishCallback(result: .Success(token))
                 }
             } else if result.isCancelled {
                 
@@ -142,7 +142,7 @@ private class JAsyncFacebookLogin : JAsyncInterface {
             } else {
                 
                 //TODO wrap error
-                finishCallback(result: AsyncResult.failure(Error(description: "unsupported fb error, TODO fix")))
+                finishCallback(result: .Failure(Error(description: "unsupported fb error, TODO fix")))
             }
         })
     }
