@@ -13,7 +13,7 @@ import iAsync_utils
 
 import FBSDKShareKit
 
-@objc public class JAsyncFacebookShareDialog: NSObject, JAsyncInterface, FBSDKSharingDelegate {
+@objc public class JAsyncFacebookShareDialog: NSObject, AsyncInterface, FBSDKSharingDelegate {
     
     private let viewController: UIViewController
     private let contentURL    : NSURL
@@ -98,5 +98,5 @@ func jffShareFacebookDialog(
             title         : title)
     }
     
-    return JAsyncBuilder.buildWithAdapterFactory(factory)
+    return AsyncBuilder.buildWithAdapterFactory(factory)
 }

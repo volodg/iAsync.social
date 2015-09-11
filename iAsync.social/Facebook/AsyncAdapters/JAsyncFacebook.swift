@@ -14,7 +14,7 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JFacebookGeneralRequestLoader : JAsyncInterface {
+private class JFacebookGeneralRequestLoader : AsyncInterface {
 
     private var requestConnection: FBSDKGraphRequestConnection?
     
@@ -99,7 +99,7 @@ func jffGenericFacebookGraphRequestLoader(
         return object
     }
     
-    return JAsyncBuilder.buildWithAdapterFactory(factory)
+    return AsyncBuilder.buildWithAdapterFactory(factory)
 }
 
 func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> AsyncTypes<NSDictionary, NSError>.Async
