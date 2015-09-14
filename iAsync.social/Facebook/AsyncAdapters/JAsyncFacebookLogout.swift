@@ -14,7 +14,7 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JAsyncFacebookLogout : AsyncInterface {
+final private class JAsyncFacebookLogout : AsyncInterface {
     
     private var finishCallback: AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback?
     private var timer: Timer?

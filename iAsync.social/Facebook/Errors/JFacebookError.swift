@@ -11,7 +11,7 @@ public enum FbErrorType {
     case Undefined
 }
 
-public class JFacebookError : JSocialError {
+final public class JFacebookError : JSocialError {
     
     let nativeError: NSError
     
@@ -25,7 +25,7 @@ public class JFacebookError : JSocialError {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func iAsyncErrorsDomain() -> String {
+    override public class func iAsyncErrorsDomain() -> String {
         return "com.just_for_fun.facebook.library"
     }
     

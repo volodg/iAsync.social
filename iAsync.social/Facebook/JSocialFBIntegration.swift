@@ -11,7 +11,7 @@ import Foundation
 import FBSDKCoreKit
 
 //TODO struct
-public class JSocialFBIntegration: NSObject {
+final public class JSocialFBIntegration: NSObject {
     
     static public func application(
         application: UIApplication,

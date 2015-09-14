@@ -4,7 +4,7 @@ import iAsync_utils
 
 public class JSocialError : Error {
     
-    func iAsyncErrorsDomain() -> String {
+    public override class func iAsyncErrorsDomain() -> String {
         
         return "com.just_for_fun.social.library"
     }

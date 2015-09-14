@@ -14,7 +14,7 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class AsyncFacebookLogin : AsyncInterface {
+final private class AsyncFacebookLogin : AsyncInterface {
 
     private let permissions: Set<String>
     private let rootVC: UIViewController
@@ -151,7 +151,7 @@ private class AsyncFacebookLogin : AsyncInterface {
     }
 }
 
-class FBApi {
+final class FBApi {
 
     static func loginLoader(permissions: Set<String>, rootVC: UIViewController) -> AsyncTypes<FBSDKAccessToken, NSError>.Async
     {

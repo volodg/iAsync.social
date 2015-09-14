@@ -13,7 +13,7 @@ import iAsync_utils
 
 import FBSDKShareKit
 
-@objc public class JAsyncFacebookShareDialog: NSObject, AsyncInterface, FBSDKSharingDelegate {
+@objc final public class JAsyncFacebookShareDialog: NSObject, AsyncInterface, FBSDKSharingDelegate {
     
     private let viewController: UIViewController
     private let contentURL    : NSURL

@@ -14,7 +14,7 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JFacebookGeneralRequestLoader : AsyncInterface {
+final private class JFacebookGeneralRequestLoader : AsyncInterface {
 
     private var requestConnection: FBSDKGraphRequestConnection?
     
