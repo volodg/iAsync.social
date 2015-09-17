@@ -11,6 +11,7 @@ import Foundation
 import iAsync_utils
 
 import Argo
+import Curry
 
 //  "updated_time" : "2014-09-13T08:38:51+0000",
 //  "verified": true }

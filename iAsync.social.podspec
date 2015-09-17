@@ -123,6 +123,7 @@ Pod::Spec.new do |s|
 
   s.pod_target_xcconfig = { 'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES' }
 
+  s.dependency 'Curry'
   s.dependency "iAsync.async"#, "~> 1.0.1"
   s.dependency "iAsync.utils"#, "~> 1.0.1"
   s.dependency "iAsync.network"#, "~> 1.0.1"
