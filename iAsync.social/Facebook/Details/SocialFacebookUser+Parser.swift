@@ -107,10 +107,13 @@ extension SocialFacebookUser {
             )
             
             return .Success(result)
-        case .TypeMismatch(let str):
-            return .Failure(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
-        case .MissingKey(let str):
-            return .Failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+        case .Failure(let error):
+            switch error {
+            case .TypeMismatch(let expected, let actual):
+                return .Failure(Error(description: "parse fasebook user TypeMismatch expected: \(expected) actual: \(actual)"))
+            case .MissingKey(let str):
+                return .Failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            }
         }
     }
 }
