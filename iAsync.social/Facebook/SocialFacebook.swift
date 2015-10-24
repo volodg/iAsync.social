@@ -13,7 +13,7 @@ import iAsync_utils
 
 import FBSDKLoginKit
 
-private let cachedAsyncOp = JCachedAsync<HashableDictionary<String, NSObject>, FBSDKAccessToken, NSError>()
+private let cachedAsyncOp = CachedAsync<HashableDictionary<String, NSObject>, FBSDKAccessToken, NSError>()
 
 final public class SocialFacebook {
 
@@ -37,7 +37,7 @@ final public class SocialFacebook {
         return { (
             progressCallback: AsyncProgressCallback?,
             stateCallback   : AsyncChangeStateCallback?,
-            doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.DidFinishAsyncCallback?) -> JAsyncHandler in
+            doneCallback    : AsyncTypes<FBSDKAccessToken, NSError>.DidFinishAsyncCallback?) -> AsyncHandler in
             
             let permissions = Set(authPermissions)
             
@@ -68,7 +68,7 @@ final public class SocialFacebook {
         return { (
             progressCallback: AsyncProgressCallback?,
             stateCallback   : AsyncChangeStateCallback?,
-            doneCallback    : AsyncTypes<(), NSError>.DidFinishAsyncCallback?) -> JAsyncHandler in
+            doneCallback    : AsyncTypes<(), NSError>.DidFinishAsyncCallback?) -> AsyncHandler in
             
             let accessToken = FBSDKAccessToken.currentAccessToken()
             

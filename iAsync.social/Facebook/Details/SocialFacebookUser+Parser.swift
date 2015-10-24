@@ -24,7 +24,6 @@ private struct SocialFacebookUserStruct1 {
     let firstName  : String?
     let lastName   : String?
     let gender     : String?
-    let birthday   : String?
 }
 
 private struct SocialFacebookUserStruct2 {
@@ -37,18 +36,22 @@ private struct SocialFacebookUserStruct2 {
     let verified   : Bool?
 }
 
+private struct SocialFacebookUserStruct3 {
+    
+    let birthday   : String?
+}
+
 extension SocialFacebookUserStruct1 : Decodable
 {
     static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct1>
     {
         return curry(self.init)
-            <^> j <| "id"
+            <^> j <|  "id"
             <*> j <|? "email"
             <*> j <|? "name"
             <*> j <|? "first_name"
             <*> j <|? "last_name"
             <*> j <|? "gender"
-            <*> j <|? "birthday"
     }
 }
 
@@ -66,16 +69,31 @@ extension SocialFacebookUserStruct2 : Decodable
     }
 }
 
+extension SocialFacebookUserStruct3 : Decodable
+{
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct3>
+    {
+        return curry(self.init)
+            <^> j <|? "birthday"
+    }
+}
+
 extension SocialFacebookUser {
     
     static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> AsyncResult<SocialFacebookUser, NSError>
     {
         let struct1: Decoded<SocialFacebookUserStruct1> = decode(json)
         
-        let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2)> in
+        let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
             
             let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
-            return res2.map( { (res1, $0) } )
+            
+            return res2 >>- { res2 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
+                
+                let res3: Decoded<SocialFacebookUserStruct3> = decode(json)
+                
+                return res3.map( { (res1, res2, $0) } )
+            }
         }
         
         switch structs {
@@ -83,7 +101,7 @@ extension SocialFacebookUser {
             
             let birthday: NSDate?
             
-            if let date = v.0.birthday {
+            if let date = v.2.birthday {
                 
                 birthday = createFbUserBithdayDateFormat().dateFromString(date)
             } else {
@@ -114,6 +132,8 @@ extension SocialFacebookUser {
                 return .Failure(Error(description: "parse fasebook user TypeMismatch expected: \(expected) actual: \(actual)"))
             case .MissingKey(let str):
                 return .Failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            case .Custom(let str):
+                return .Failure(Error(description: "parse fasebook user Custom: \(str) json: \(json)"))
             }
         }
     }
