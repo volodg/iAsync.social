@@ -2,7 +2,7 @@
 //  iAsync.social.h
 //  iAsync.social
 //
-//  Created by Volodymyr on 05.06.15.
+//  Created by Vladimir Gorbenko on 05.06.15.
 //  Copyright (c) 2015 EmbeddedSources. All rights reserved.
 //
 

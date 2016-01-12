@@ -8,13 +8,13 @@
 
 import Foundation
 
-import iAsync_utils
 import iAsync_async
+import iAsync_utils
 
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JFacebookGeneralRequestLoader : JAsyncInterface {
+final private class JFacebookGeneralRequestLoader : AsyncInterface {
 
     private var requestConnection: FBSDKGraphRequestConnection?
     
@@ -35,16 +35,17 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
         self.parameters  = parameters
     }
     
-    typealias ResultType = NSDictionary
+    typealias ErrorT = NSError
+    typealias ValueT = NSDictionary
     
     var isForeignThreadResultCallback: Bool {
         return false
     }
     
     func asyncWithResultCallback(
-        finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
-        stateCallback: JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         let fbRequest = FBSDKGraphRequest(
             graphPath  : graphPath ,
@@ -60,18 +61,18 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
             
             if let graphObject = graphObject as? NSDictionary {
                 
-                finishCallback(result: Result.value(graphObject))
+                finishCallback(result: .Success(graphObject))
             } else {
                 
-                finishCallback(result: Result.error(error))
+                finishCallback(result: .Failure(JFacebookError(nativeError: error)))
             }
         }
     }
     
-    func doTask(task: JAsyncHandlerTask)
+    func doTask(task: AsyncHandlerTask)
     {
-        assert(task.rawValue <= JAsyncHandlerTask.Cancel.rawValue)
-        if task == JAsyncHandlerTask.Cancel {
+        assert(task.unsubscribedOrCanceled)
+        if task == .Cancel {
             
             if let requestConnection = requestConnection {
                 self.requestConnection = nil
@@ -82,10 +83,10 @@ private class JFacebookGeneralRequestLoader : JAsyncInterface {
 }
 
 func jffGenericFacebookGraphRequestLoader(
-    accessToken: FBSDKAccessToken,
+    accessToken accessToken: FBSDKAccessToken,
     graphPath  : String,
     httpMethod : String?,
-    parameters : [String:AnyObject]?) -> JAsyncTypes<NSDictionary>.JAsync
+    parameters : [String:AnyObject]?) -> AsyncTypes<NSDictionary, NSError>.Async
 {
     let factory = { () -> JFacebookGeneralRequestLoader in
 
@@ -98,10 +99,10 @@ func jffGenericFacebookGraphRequestLoader(
         return object
     }
     
-    return JAsyncBuilder.buildWithAdapterFactory(factory)
+    return AsyncBuilder.buildWithAdapterFactory(factory)
 }
 
-func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> JAsyncTypes<NSDictionary>.JAsync
+func jffFacebookGraphRequestLoader(accessToken: FBSDKAccessToken, graphPath: String) -> AsyncTypes<NSDictionary, NSError>.Async
 {
-    return jffGenericFacebookGraphRequestLoader(accessToken, graphPath, nil, nil)
+    return jffGenericFacebookGraphRequestLoader(accessToken: accessToken, graphPath: graphPath, httpMethod: nil, parameters: nil)
 }

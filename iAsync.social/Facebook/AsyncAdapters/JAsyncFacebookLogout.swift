@@ -14,22 +14,22 @@ import iAsync_utils
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-private class JAsyncFacebookLogout : JAsyncInterface {
+final private class JAsyncFacebookLogout : AsyncInterface {
     
-    private var finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback?
+    private var finishCallback: AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback?
     private var timer: Timer?
     
     private let renewSystemAuthorization: Bool
     
-    typealias ResultType = ()
+    typealias ErrorT = NSError
+    typealias ValueT = ()
     
     init(renewSystemAuthorization: Bool) {
-        
         self.renewSystemAuthorization = renewSystemAuthorization
     }
     
     var isForeignThreadResultCallback: Bool {
-        return false
+        return true
     }
     
     func logOut() {
@@ -40,7 +40,7 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         self.timer = timer
         
         //TODO remove ????
-        let cancel = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
+        let _ = timer.addBlock( { [weak self] (cancel: () -> ()) -> () in
             
             cancel()
             self?.notifyFinished()
@@ -50,19 +50,18 @@ private class JAsyncFacebookLogout : JAsyncInterface {
     var manager: FBSDKLoginManager?
     
     func asyncWithResultCallback(
-        finishCallback: JAsyncTypes<ResultType>.JDidFinishAsyncCallback,
-        stateCallback: JAsyncChangeStateCallback,
-        progressCallback: JAsyncProgressCallback)
+        finishCallback  : AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback,
+        stateCallback   : AsyncChangeStateCallback,
+        progressCallback: AsyncProgressCallback)
     {
         self.finishCallback = finishCallback
         
-        let manager = FBSDKLoginManager()
+        let manager  = FBSDKLoginManager()
         self.manager = manager
         
         if renewSystemAuthorization {
             
             FBSDKLoginManager.renewSystemCredentials({ (result: ACAccountCredentialRenewResult, error: NSError!) -> Void in
-                
                 self.logOut()
             })
             return
@@ -71,18 +70,16 @@ private class JAsyncFacebookLogout : JAsyncInterface {
         logOut()
     }
     
-    func doTask(task: JAsyncHandlerTask)
-    {
-        assert(task.rawValue <= JAsyncHandlerTask.Cancel.rawValue)
+    func doTask(task: AsyncHandlerTask) {
+        assert(task.unsubscribedOrCanceled)
     }
     
-    func notifyFinished()
-    {
-        finishCallback?(result: Result.value(()))
+    func notifyFinished() {
+        finishCallback?(result: .Success(()))
     }
 }
 
-func jffFacebookLogout(renewSystemAuthorization: Bool) -> JAsyncTypes<()>.JAsync
+func facebookLogout(renewSystemAuthorization: Bool) -> AsyncTypes<(), NSError>.Async
 {
     let factory = { () -> JAsyncFacebookLogout in
         
@@ -90,5 +87,5 @@ func jffFacebookLogout(renewSystemAuthorization: Bool) -> JAsyncTypes<()>.JAsync
         return object
     }
     
-    return JAsyncBuilder.buildWithAdapterFactory(factory)
+    return AsyncBuilder.buildWithAdapterFactory(factory)
 }

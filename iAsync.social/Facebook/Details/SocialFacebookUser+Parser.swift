@@ -11,8 +11,7 @@ import Foundation
 import iAsync_utils
 
 import Argo
-import Runes
-import Box
+import Curry
 
 //  "updated_time" : "2014-09-13T08:38:51+0000",
 //  "verified": true }
@@ -25,7 +24,6 @@ private struct SocialFacebookUserStruct1 {
     let firstName  : String?
     let lastName   : String?
     let gender     : String?
-    let birthday   : String?
 }
 
 private struct SocialFacebookUserStruct2 {
@@ -38,65 +36,30 @@ private struct SocialFacebookUserStruct2 {
     let verified   : Bool?
 }
 
-extension SocialFacebookUserStruct1 : Decodable {
+private struct SocialFacebookUserStruct3 {
     
-    static func create
-        (id         : String )
-        (email      : String?)
-        (name       : String?)
-        (firstName  : String?)
-        (lastName   : String?)
-        (gender     : String?)
-        (birthday   : String?)
-        -> SocialFacebookUserStruct1
-    {
-        return self(
-            id         : id         ,
-            email      : email      ,
-            name       : name       ,
-            firstName  : firstName  ,
-            lastName   : lastName   ,
-            gender     : gender     ,
-            birthday   : birthday
-        )
-    }
-    
+    let birthday   : String?
+}
+
+extension SocialFacebookUserStruct1 : Decodable
+{
     static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct1>
     {
-        return self.create
-            <^> j <| "id"
+        return curry(self.init)
+            <^> j <|  "id"
             <*> j <|? "email"
             <*> j <|? "name"
             <*> j <|? "first_name"
             <*> j <|? "last_name"
             <*> j <|? "gender"
-            <*> j <|? "birthday"
     }
 }
 
-extension SocialFacebookUserStruct2 : Decodable {
-    
-    static func create
-        (biography  : String?)
-        (link       : String?)
-        (locale     : String?)
-        (timezone   : Int?)
-        (updatedTime: String?)
-        (verified   : Bool?)
-        -> SocialFacebookUserStruct2
-    {
-        return self(
-            biography  : biography  ,
-            link       : link       ,
-            locale     : locale     ,
-            timezone   : timezone   ,
-            updatedTime: updatedTime,
-            verified   : verified)
-    }
-    
+extension SocialFacebookUserStruct2 : Decodable
+{
     static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct2>
     {
-        return self.create
+        return curry(self.init)
             <^> j <|? "bio"
             <*> j <|? "link"
             <*> j <|? "locale"
@@ -106,52 +69,72 @@ extension SocialFacebookUserStruct2 : Decodable {
     }
 }
 
+extension SocialFacebookUserStruct3 : Decodable
+{
+    static func decode(j: JSON) -> Decoded<SocialFacebookUserStruct3>
+    {
+        return curry(self.init)
+            <^> j <|? "birthday"
+    }
+}
+
 extension SocialFacebookUser {
     
-    static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> Result<SocialFacebookUser>
+    static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> AsyncResult<SocialFacebookUser, NSError>
     {
         let struct1: Decoded<SocialFacebookUserStruct1> = decode(json)
         
-        let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2)> in
+        let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
             
             let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
-            return res2.map( { (res1, $0) } )
+            
+            return res2 >>- { res2 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
+                
+                let res3: Decoded<SocialFacebookUserStruct3> = decode(json)
+                
+                return res3.map( { (res1, res2, $0) } )
+            }
         }
         
         switch structs {
-        case let .Success(v):
+        case .Success(let v):
             
             let birthday: NSDate?
             
-            if let date = v.value.0.birthday {
+            if let date = v.2.birthday {
                 
-                birthday = fbUserBithdayDateFormat.dateFromString(date)
+                birthday = createFbUserBithdayDateFormat().dateFromString(date)
             } else {
                 
                 birthday = nil
             }
             
             let result = SocialFacebookUser(
-                id         : v.value.0.id         ,
-                email      : v.value.0.email      ,
-                name       : v.value.0.name       ,
-                firstName  : v.value.0.firstName  ,
-                lastName   : v.value.0.lastName   ,
-                gender     : v.value.0.gender     ,
-                birthday   : birthday             ,
-                biography  : v.value.1.biography  ,
-                link       : v.value.1.link       ,
-                locale     : v.value.1.locale     ,
-                timezone   : v.value.1.timezone   ,
-                updatedTime: v.value.1.updatedTime,
-                verified   : v.value.1.verified
+                id         : v.0.id         ,
+                email      : v.0.email      ,
+                name       : v.0.name       ,
+                firstName  : v.0.firstName  ,
+                lastName   : v.0.lastName   ,
+                gender     : v.0.gender     ,
+                birthday   : birthday       ,
+                biography  : v.1.biography  ,
+                link       : v.1.link       ,
+                locale     : v.1.locale     ,
+                timezone   : v.1.timezone   ,
+                updatedTime: v.1.updatedTime,
+                verified   : v.1.verified
             )
             
-            return Result.value(result)
-        case let .TypeMismatch(str):
-            return Result.error(Error(description: "parse fasebook user TypeMismatch: \(str) json: \(json)"))
-        case let .MissingKey(str):
-            return Result.error(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            return .Success(result)
+        case .Failure(let error):
+            switch error {
+            case .TypeMismatch(let expected, let actual):
+                return .Failure(Error(description: "parse fasebook user TypeMismatch expected: \(expected) actual: \(actual)"))
+            case .MissingKey(let str):
+                return .Failure(Error(description: "parse fasebook user MissingKey: \(str) json: \(json)"))
+            case .Custom(let str):
+                return .Failure(Error(description: "parse fasebook user Custom: \(str) json: \(json)"))
+            }
         }
     }
 }
