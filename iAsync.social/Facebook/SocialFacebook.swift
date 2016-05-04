@@ -8,9 +8,6 @@
 
 import Foundation
 
-import iAsync_async
-import iAsync_utils
-
 import FBSDKLoginKit
 
 private let cachedAsyncOp = CachedAsync<HashableDictionary<String, NSObject>, FBSDKAccessToken, NSError>()
