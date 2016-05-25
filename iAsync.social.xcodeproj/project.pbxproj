@@ -298,6 +298,7 @@
 		2D65F9A11B21CDFE007793DB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = EmbeddedSources;
 				TargetAttributes = {
