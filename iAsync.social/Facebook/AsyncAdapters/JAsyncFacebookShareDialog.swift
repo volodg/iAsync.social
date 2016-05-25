@@ -14,12 +14,12 @@ import iAsync_utils
 import FBSDKShareKit
 
 @objc final public class JAsyncFacebookShareDialog: NSObject, AsyncInterface, FBSDKSharingDelegate {
-    
+
     private let viewController: UIViewController
     private let contentURL    : NSURL
     private let usersIDs      : [String]
     private let title         : String
-    
+
     init(
         viewController: UIViewController,
         contentURL    : NSURL,
@@ -31,52 +31,52 @@ import FBSDKShareKit
         self.usersIDs       = usersIDs
         self.title          = title
     }
-    
+
     public typealias ErrorT = NSError
     public typealias ValueT = Void
-    
+
     private var shareDialog: FBSDKShareDialog? = nil
-    
+
     private var finishCallback: AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback?
-    
+
     public func asyncWithResultCallback(
         finishCallback  : AsyncTypes<ValueT, ErrorT>.DidFinishAsyncCallback,
         stateCallback   : AsyncChangeStateCallback,
         progressCallback: AsyncProgressCallback)
     {
         self.finishCallback = finishCallback
-        
+
         let content = FBSDKShareLinkContent()
-        
+
         content.peopleIDs    = usersIDs
         content.contentURL   = contentURL
         content.contentTitle = title
-        
+
         shareDialog = FBSDKShareDialog.showFromViewController(
             viewController,
             withContent: content,
             delegate   : self)
     }
-    
+
     public func doTask(task: AsyncHandlerTask)
     {
         assert(task.unsubscribedOrCanceled)
     }
-    
+
     public var isForeignThreadResultCallback: Bool {
         return false
     }
-    
+
     @objc public func sharer(sharer: FBSDKSharing!, didCompleteWithResults results: [NSObject : AnyObject]!)
     {
         finishCallback?(result: .Success(()))
     }
-    
+
     public func sharer(sharer: FBSDKSharing!, didFailWithError error: NSError!)
     {
         finishCallback?(result: .Failure(error))
     }
-    
+
     public func sharerDidCancel(sharer: FBSDKSharing!)
     {
         finishCallback?(result: .Interrupted)
@@ -90,13 +90,13 @@ func jffShareFacebookDialog(
     title         : String) -> AsyncTypes<(), NSError>.Async
 {
     let factory = { () -> JAsyncFacebookShareDialog in
-        
+
         return JAsyncFacebookShareDialog(
             viewController: viewController,
             contentURL    : contentURL    ,
             usersIDs      : usersIDs      ,
             title         : title)
     }
-    
+
     return AsyncBuilder.buildWithAdapterFactory(factory)
 }

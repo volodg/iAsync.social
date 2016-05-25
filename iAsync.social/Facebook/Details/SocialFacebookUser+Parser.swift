@@ -17,7 +17,7 @@ import Curry
 //  "verified": true }
 
 private struct SocialFacebookUserStruct1 {
-    
+
     let id         : String
     let email      : String?
     let name       : String?
@@ -27,7 +27,7 @@ private struct SocialFacebookUserStruct1 {
 }
 
 private struct SocialFacebookUserStruct2 {
-    
+
     let biography  : String?
     let link       : String?
     let locale     : String?
@@ -37,7 +37,7 @@ private struct SocialFacebookUserStruct2 {
 }
 
 private struct SocialFacebookUserStruct3 {
-    
+
     let birthday   : String?
 }
 
@@ -79,36 +79,36 @@ extension SocialFacebookUserStruct3 : Decodable
 }
 
 extension SocialFacebookUser {
-    
+
     static func createSocialFacebookUserWithJsonObject(json: AnyObject) -> AsyncResult<SocialFacebookUser, NSError>
     {
         let struct1: Decoded<SocialFacebookUserStruct1> = decode(json)
-        
+
         let structs = struct1 >>- { res1 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
-            
+
             let res2: Decoded<SocialFacebookUserStruct2> = decode(json)
-            
+
             return res2 >>- { res2 -> Decoded<(SocialFacebookUserStruct1, SocialFacebookUserStruct2, SocialFacebookUserStruct3)> in
-                
+
                 let res3: Decoded<SocialFacebookUserStruct3> = decode(json)
-                
+
                 return res3.map( { (res1, res2, $0) } )
             }
         }
-        
+
         switch structs {
         case .Success(let v):
-            
+
             let birthday: NSDate?
-            
+
             if let date = v.2.birthday {
-                
+
                 birthday = createFbUserBithdayDateFormat().dateFromString(date)
             } else {
-                
+
                 birthday = nil
             }
-            
+
             let result = SocialFacebookUser(
                 id         : v.0.id         ,
                 email      : v.0.email      ,
@@ -124,7 +124,7 @@ extension SocialFacebookUser {
                 updatedTime: v.1.updatedTime,
                 verified   : v.1.verified
             )
-            
+
             return .Success(result)
         case .Failure(let error):
             switch error {
