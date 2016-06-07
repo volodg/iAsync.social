@@ -2,7 +2,7 @@ import Foundation
 
 import iAsync_utils
 
-public class JSocialError : Error {
+public class JSocialError : UtilsError {
 
     public override class func iAsyncErrorsDomain() -> String {
 

@@ -3,20 +3,22 @@ use_frameworks!
 
 def import_pods
 
-pod 'iAsync.async'
-pod 'iAsync.utils'
-pod 'iAsync.network'
+  pod 'iAsync.reactiveKit', :path => '../iAsync.reactiveKit'
+  pod 'iAsync.utils'      , :path => '../iAsync.utils'
+  pod 'iAsync.network'    , :path => '../iAsync.network'
 
-pod 'FBSDKCoreKit'
-pod 'FBSDKShareKit'
-pod 'FBSDKLoginKit'
+  pod 'Argo'
+  pod 'Curry'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKShareKit'
+  pod 'FBSDKLoginKit'
 
 end
 
-target 'iAsync.social', :exclusive => true do
+target 'iAsync.social' do
   import_pods
 end
 
-target 'iAsync.socialTests', :exclusive => true do
+target 'iAsync.socialTests' do
   import_pods
 end
